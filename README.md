@@ -27,8 +27,10 @@ Your personal AI operating system. Download, configure, and vibe-code your way t
    ```
 
 5. **Open the Command Center**
-   - Browser: `http://localhost:3000`
-   - Mobile: Same URL from your phone on the same network
+   - Landing page: `http://localhost:3000/landing.html`
+   - App: `http://localhost:3000`
+   - Pricing: `http://localhost:3000/pricing.html`
+   - Mobile: Same URLs from your phone on the same network
 
 ## What You Get
 
