@@ -1,0 +1,32 @@
+{
+  "priorities": [
+    {
+      "id": "configure",
+      "title": "Configure your ventures",
+      "description": "Edit backend/config/ventures.json to define your businesses",
+      "status": "in_progress",
+      "priority": "high"
+    },
+    {
+      "id": "connect-llm",
+      "title": "Connect your LLM",
+      "description": "Add your Gemini/OpenAI/Anthropic API key to backend/.env",
+      "status": "pending",
+      "priority": "high"
+    },
+    {
+      "id": "set-up-crm",
+      "title": "Set up CRM (optional)",
+      "description": "Configure Google Sheets for prospect management",
+      "status": "pending",
+      "priority": "medium"
+    },
+    {
+      "id": "customize-agents",
+      "title": "Customize agents",
+      "description": "Modify agent prompts and behaviors for your use case",
+      "status": "pending",
+      "priority": "medium"
+    }
+  ]
+}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/jarvis-icon.svg">
+
+<title>JARVIS OS Command Center</title>
+
+<script>
+(function() {
+    if ("caches" in window) {
+        caches.keys().then(function(names) {
+            names.forEach(function(name) {
+                caches.delete(name);
+            });
+        });
+    }
+})();
+</script>
+
+<link rel="stylesheet" href="css/jarvis.css">
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <aside id="sidebar">
+
+        <div class="brand">
+            <div class="brand-mark">J</div>
+
+            <div>
+                <h1>JARVIS</h1>
+                <span>OPERATING SYSTEM</span>
+            </div>
+        </div>
+
+        <div class="system-status">
+            <span class="status-dot"></span>
+            <span>JARVIS ONLINE</span>
+        </div>
+
+        <nav id="mainNavigation">
+
+            <button class="nav-button active" onclick="loadModule('dashboard')">
+                <span>\u25c8</span>
+                Command Center
+            </button>
+
+            <button class="nav-button" onclick="loadModule('agent-hub')">
+                <span>\u2b21</span>
+                Agent Hub
+            </button>
+
+            <button class="nav-button" onclick="loadModule('crm')">
+                <span>\u25a3</span>
+                CRM
+            </button>
+
+            <button class="nav-button" onclick="loadModule('chat')">
+                <span>\u2726</span>
+                Ask JARVIS
+            </button>
+
+            <button class="nav-button" onclick="loadModule('settings')">
+                <span>\u2699</span>
+                Settings
+            </button>
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <div class="connection-label">
+                BACKEND
+                <strong>localhost:3000</strong>
+            </div>
+
+            <div class="connection-label">
+                ENVIRONMENT
+                <strong>LOCAL DEVELOPMENT</strong>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <main id="workspace">
+
+        <header id="topbar">
+
+            <div>
+
+                <div class="eyebrow">
+                    JARVIS OS / COMMAND CENTER
+                </div>
+
+                <h2 id="pageTitle">
+                    Executive Command Center
+                </h2>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="system-clock" id="systemClock">
+                    --:--:--
+                </div>
+
+                <div class="health-badge">
+                    <span class="status-dot"></span>
+                    SYSTEM HEALTHY
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section id="conversation">
+
+            <div id="dashboardRoot">
+            </div>
+
+        </section>
+
+
+        <footer id="commandBar">
+
+            <div class="command-wrapper">
+
+                <textarea
+                    id="command"
+                    placeholder="Ask JARVIS anything..."
+                    rows="1"
+                ></textarea>
+
+                <button
+                    id="voiceCommand"
+                    type="button"
+                    onclick="JarvisVoice.start()"
+                    aria-label="Push to talk"
+                >MIC</button>
+
+                <button
+                    id="sendCommand"
+                    onclick="askJarvisChat()"
+                >
+                    SEND
+                </button>
+
+            </div>
+
+            <div class="command-hint">
+                JARVIS can research, reason, plan, execute, monitor and coordinate your ventures.
+            </div>
+
+        </footer>
+
+    </main>
+
+
+    <aside id="intelligencePanel">
+
+        <div class="panel-header">
+
+            <div class="eyebrow">
+                MORNING BRIEFING
+            </div>
+
+            <h2>Daily Overview</h2>
+
+        </div>
+
+
+        <div class="intelligence-section">
+
+            <div class="section-label">
+                PENDING APPROVALS
+            </div>
+
+            <div id="pendingApprovals" class="intelligence-card">
+
+                <div class="loading-state">
+                    Loading...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="intelligence-section">
+
+            <div class="section-label">
+                TODAY'S PRIORITIES
+            </div>
+
+            <div id="todaysPriorities" class="intelligence-card">
+
+                <div class="loading-state">
+                    Loading priorities...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="intelligence-section">
+
+            <div class="section-label">
+                AGENT NETWORK
+            </div>
+
+            <div id="agentNetwork">
+
+                <div class="loading-state">
+                    Loading agents...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="intelligence-section">
+
+            <div class="section-label">
+                SYSTEM HEALTH
+            </div>
+
+            <div id="systemHealth">
+
+                <div class="loading-state">
+                    Checking health...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="intelligence-section">
+
+            <div class="section-label">
+                RECENT ACTIVITY
+            </div>
+
+            <div id="recentActivity">
+
+                <div class="activity-item">
+                    <span class="activity-dot"></span>
+                    JARVIS initialized
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<script src="js/auth.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/commandCenter.js"></script>
+<script src="js/agentHub.js"></script>
+<script src="js/chief.js"></script>
+<script src="js/layout.js"></script>
+<script>
+window.onerror = function(msg, url, line, col, err) {
+    var el = document.getElementById("conversation");
+    if (el) {
+        el.innerHTML = '<div style="padding:28px;color:#ef4444;font-family:monospace"><h2 style="color:#ef4444">JavaScript Error</h2><pre style="white-space:pre-wrap;color:#ff8080">' + msg + '\n\nFile: ' + url + '\nLine: ' + line + ':' + col + (err ? '\nStack: ' + err.stack : '') + '</pre></div>';
+    }
+    console.error("JARVIS FATAL:", msg, url, line, col, err);
+};
+</script>
+</body>
+
+</html>

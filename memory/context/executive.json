@@ -1,0 +1,9 @@
+{
+  "primaryFocus": "Configure your primary business",
+  "endState": "A JARVIS that thinks like you — researching, discovering, and preparing work for your approval.",
+  "constraints": [
+    "No outbound actions without human approval",
+    "All data stays local unless you configure integrations",
+    "Modular agents — each does one thing well"
+  ]
+}

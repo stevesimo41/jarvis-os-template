@@ -1,0 +1,14 @@
+{
+  "ventures": [
+    {
+      "id": "my-primary",
+      "name": "My Primary Business",
+      "type": "service",
+      "description": "Describe what you do here",
+      "targetMarket": "Who you serve (e.g., small businesses in Columbus, OH)",
+      "crmSource": "google-sheets",
+      "outreachChannels": ["email", "linkedin", "website-contact-form"]
+    }
+  ],
+  "defaultVenture": "my-primary"
+}

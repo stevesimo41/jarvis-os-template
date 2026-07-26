@@ -1,0 +1,23 @@
+{
+  "version": 1,
+    "defaultTtlMinutes": 10080,
+  "actions": {
+    "research_organization": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "find_website": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "find_email": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "find_executive_email": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "website_outreach": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "send_email": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "follow_up": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "active_conversation": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "add_prospects_to_crm": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "enrich_crm_prospect": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "update_crm_prospect": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "outreach_email": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "review_scheduler_finding": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "review_venture_candidate": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "prepare_venture_assets": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "approve_venture_message": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "market_pulse_opportunity": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 }
+  }
+}
