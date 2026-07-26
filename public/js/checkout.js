@@ -17,14 +17,11 @@
     "use strict";
 
     var CONFIG = {
-        // Replace with your actual Lemon Squeezy checkout URLs
         checkout: {
-            pro: "https://jarvisos.lemonsqueezy.com/checkout/buy/pro-monthly",
-            business: "https://jarvisos.lemonsqueezy.com/checkout/biz-onetime"
+            pro: "https://jarvis-os.lemonsqueezy.com/checkout/buy/57fad3b1-b933-418f-8171-7b4954576298",
+            business: "https://jarvis-os.lemonsqueezy.com/checkout/buy/09df18ce-7b98-4996-955b-8373abdac1c2"
         },
-        // Optional: your Lemon Squeezy store ID for analytics
         storeId: "",
-        // Fallback download URL (GitHub)
         fallbackDownload: "https://github.com/stevesimo41/jarvis-os-template/archive/refs/heads/main.zip"
     };
 
@@ -46,13 +43,10 @@
                 value: plan === "pro" ? 29 : 997
             });
 
-            // Open Lemon Squeezy checkout
             var url = CONFIG.checkout[plan];
-            if (url && !url.includes("lemonsqueezy.com/checkout/buy/pro-monthly") || 
-                (plan === "business" && !url.includes("lemonsqueezy.com/checkout/biz-onetime"))) {
+            if (url && url.includes("lemonsqueezy.com")) {
                 window.location.href = url;
             } else {
-                // Checkout URLs not configured yet — show waitlist modal
                 showWaitlist(plan);
             }
         } else if (plan === "download") {
