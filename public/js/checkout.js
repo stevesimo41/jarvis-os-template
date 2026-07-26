@@ -18,8 +18,8 @@
 
     var CONFIG = {
         checkout: {
-            pro: "https://jarvis-os.lemonsqueezy.com/checkout/buy/57fad3b1-b933-418f-8171-7b4954576298",
-            business: "https://jarvis-os.lemonsqueezy.com/checkout/buy/09df18ce-7b98-4996-955b-8373abdac1c2"
+            pro: "https://jarvis-os.lemonsqueezy.com/checkout/buy/09df18ce-7b98-4996-955b-8373abdac1c2",
+            business: "https://jarvis-os.lemonsqueezy.com/checkout/buy/57fad3b1-b933-418f-8171-7b4954576298"
         },
         storeId: "",
         fallbackDownload: "https://github.com/stevesimo41/jarvis-os-template/archive/refs/heads/main.zip"
