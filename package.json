@@ -1,0 +1,10 @@
+{
+    "name": "jarvis-os-marketing",
+    "version": "1.0.0",
+    "private": true,
+    "description": "JARVIS OS marketing site",
+    "scripts": {
+        "dev": "npx serve public -p 3001",
+        "build": "echo 'Static site — no build step'"
+    }
+}

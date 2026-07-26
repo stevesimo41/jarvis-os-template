@@ -1,0 +1,10 @@
+node_modules/
+backend/
+data/
+memory/
+.git/
+.vercel/
+*.md
+setup.sh
+.env
+.env.local
