@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS OS — Pricing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #080b10;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 40px;
+            border-bottom: 1px solid #1a1f2e;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-brand .logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: #080b10;
+        }
+
+        .nav-brand h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #8892a4;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: #fff; }
+
+        .nav-links .btn-github {
+            background: #1a1f2e;
+            color: #e0e0e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .nav-links .btn-github:hover { background: #252b3b; color: #fff; }
+
+        .hero {
+            text-align: center;
+            padding: 80px 40px 40px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero .eyebrow {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #22c55e;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #8892a4;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 40px;
+        }
+
+        .card {
+            background: #0d1117;
+            border: 1px solid #1a1f2e;
+            border-radius: 12px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card.featured {
+            border-color: #22c55e;
+            position: relative;
+        }
+
+        .card.featured::before {
+            content: "MOST POPULAR";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #22c55e;
+            color: #080b10;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .card-tier {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #8892a4;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .card-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: #8892a4;
+            margin-bottom: 24px;
+            min-height: 42px;
+        }
+
+        .card-price {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            margin-bottom: 24px;
+        }
+
+        .card-price .amount {
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card-price .period {
+            font-size: 14px;
+            color: #8892a4;
+        }
+
+        .card-price .free {
+            font-size: 42px;
+            font-weight: 700;
+            color: #22c55e;
+        }
+
+        .card-cta {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            margin-bottom: 24px;
+            transition: all 0.2s;
+        }
+
+        .cta-outline {
+            background: transparent;
+            border: 1px solid #333;
+            color: #e0e0e0;
+        }
+
+        .cta-outline:hover {
+            border-color: #22c55e;
+            color: #22c55e;
+        }
+
+        .cta-primary {
+            background: #22c55e;
+            color: #080b10;
+        }
+
+        .cta-primary:hover {
+            background: #16a34a;
+        }
+
+        .cta-dark {
+            background: #1a1f2e;
+            color: #e0e0e0;
+        }
+
+        .cta-dark:hover {
+            background: #252b3b;
+        }
+
+        .card-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .card-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: #b0b8c4;
+        }
+
+        .card-features li::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .card-features li.disabled {
+            color: #4a5568;
+        }
+
+        .card-features li.disabled::before {
+            content: "—";
+            color: #4a5568;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #1a1f2e;
+            margin: 80px auto;
+            max-width: 1100px;
+        }
+
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+
+        .section h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .section p {
+            font-size: 16px;
+            color: #8892a4;
+            margin-bottom: 32px;
+            max-width: 600px;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .compare-table th,
+        .compare-table td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid #1a1f2e;
+            font-size: 14px;
+        }
+
+        .compare-table th {
+            color: #8892a4;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .compare-table td:first-child {
+            color: #e0e0e0;
+        }
+
+        .compare-table td {
+            color: #8892a4;
+        }
+
+        .compare-table td.yes {
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .compare-table td.no {
+            color: #4a5568;
+        }
+
+        .faq {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+
+        .faq h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #1a1f2e;
+            padding: 24px 0;
+        }
+
+        .faq-q {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .faq-a {
+            font-size: 14px;
+            color: #8892a4;
+            line-height: 1.7;
+        }
+
+        .cta-banner {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(180deg, #080b10 0%, #0d1912 100%);
+            border-top: 1px solid #1a2e1a;
+        }
+
+        .cta-banner h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .cta-banner p {
+            font-size: 16px;
+            color: #8892a4;
+            margin-bottom: 32px;
+        }
+
+        .cta-banner a {
+            display: inline-block;
+            background: #22c55e;
+            color: #080b10;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .cta-banner a:hover { background: #16a34a; }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #4a5568;
+            font-size: 13px;
+            border-top: 1px solid #1a1f2e;
+        }
+
+        footer a { color: #8892a4; text-decoration: none; }
+        footer a:hover { color: #fff; }
+
+        @media (max-width: 768px) {
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+            .hero h2 { font-size: 28px; }
+            .nav { padding: 16px 20px; }
+            .nav-links { gap: 16px; }
+            .hero { padding: 60px 20px 20px; }
+            .pricing-grid { padding: 0 20px; }
+            .compare-table { font-size: 12px; }
+            .compare-table th, .compare-table td { padding: 10px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-brand">
+        <div class="logo">J</div>
+        <h1>JARVIS OS</h1>
+    </div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/#features">Features</a>
+        <a href="/pricing">Pricing</a>
+        <a href="https://github.com/stevesimo41/jarvis-os-template" class="btn-github">GitHub</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="eyebrow">Simple Pricing</div>
+    <h2>Your AI operating system.<br>Pay for what you need.</h2>
+    <p>Start free with the open-source template. Upgrade when you want it managed, configured, or customized for your industry.</p>
+</section>
+
+<div class="pricing-grid">
+
+    <!-- Free Tier -->
+    <div class="card">
+        <div class="card-tier">Self-Hosted</div>
+        <div class="card-name">Community</div>
+        <div class="card-desc">Full source code. Run it yourself. Forever free.</div>
+        <div class="card-price">
+            <span class="free">$0</span>
+            <span class="period">/ forever</span>
+        </div>
+        <a href="https://github.com/stevesimo41/jarvis-os-template" class="card-cta cta-outline">Download on GitHub</a>
+        <ul class="card-features">
+            <li>Full JARVIS OS source code</li>
+            <li>Command Center dashboard</li>
+            <li>Market Pulse agent</li>
+            <li>Prospect enrichment</li>
+            <li>Contact form detection</li>
+            <li>Approval governance</li>
+            <li>Multi-LLM support</li>
+            <li>Community support (GitHub Issues)</li>
+        </ul>
+    </div>
+
+    <!-- Pro Tier -->
+    <div class="card featured">
+        <div class="card-tier">Managed</div>
+        <div class="card-name">Pro</div>
+        <div class="card-desc">We host it. You use it. Pre-configured with your LLM key.</div>
+        <div class="card-price">
+            <span class="amount">$29</span>
+            <span class="period">/ month</span>
+        </div>
+        <a href="#waitlist" class="card-cta cta-primary">Join Waitlist</a>
+        <ul class="card-features">
+            <li>Everything in Community</li>
+            <li>Cloud-hosted (no server setup)</li>
+            <li>LLM included (Gemini or OpenAI)</li>
+            <li>Email configured & ready to send</li>
+            <li>Weekly opportunity scans</li>
+            <li>Mobile access from anywhere</li>
+            <li>Automatic updates</li>
+            <li>Priority email support</li>
+        </ul>
+    </div>
+
+    <!-- Business Tier -->
+    <div class="card">
+        <div class="card-tier">Done-For-You</div>
+        <div class="card-name">Business</div>
+        <div class="card-desc">Custom-built for your industry. Configured, trained, and launched.</div>
+        <div class="card-price">
+            <span class="amount">$997</span>
+            <span class="period">one-time</span>
+        </div>
+        <a href="#contact" class="card-cta cta-dark">Get Started</a>
+        <ul class="card-features">
+            <li>Everything in Pro</li>
+            <li>Custom target market config</li>
+            <li>Industry-specific agent tuning</li>
+            <li>CRM connected & mapped</li>
+            <li>Email templates written for your voice</li>
+            <li>Outreach cadence configured</li>
+            <li>1-hour onboarding call</li>
+            <li>30 days of support</li>
+        </ul>
+    </div>
+
+</div>
+
+<hr class="divider">
+
+<div class="section">
+    <h3>Compare Plans</h3>
+    <p>Every plan includes the full JARVIS OS codebase. The difference is how much we do for you.</p>
+    <table class="compare-table">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Community</th>
+                <th>Pro</th>
+                <th>Business</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Source code access</td>
+                <td class="yes">✓ Full</td>
+                <td class="yes">✓ Full</td>
+                <td class="yes">✓ Full</td>
+            </tr>
+            <tr>
+                <td>Self-hosted</td>
+                <td class="yes">✓</td>
+                <td class="yes">✓</td>
+                <td class="yes">✓</td>
+            </tr>
+            <tr>
+                <td>Cloud-hosted</td>
+                <td class="no">—</td>
+                <td class="yes">✓</td>
+                <td class="yes">✓</td>
+            </tr>
+            <tr>
+                <td>LLM included</td>
+                <td class="no">Bring your own key</td>
+                <td class="yes">✓ Included</td>
+                <td class="yes">✓ Included</td>
+            </tr>
+            <tr>
+                <td>Email outreach setup</td>
+                <td class="no">Manual config</td>
+                <td class="yes">✓ Pre-configured</td>
+                <td class="yes">✓ Custom templates</td>
+            </tr>
+            <tr>
+                <td>Market Pulse scans</td>
+                <td class="yes">✓ Local</td>
+                <td class="yes">✓ Managed + weekly</td>
+                <td class="yes">✓ Custom targets</td>
+            </tr>
+            <tr>
+                <td>CRM integration</td>
+                <td class="no">Optional</td>
+                <td class="no">Optional</td>
+                <td class="yes">✓ Connected</td>
+            </tr>
+            <tr>
+                <td>Outreach cadence</td>
+                <td class="no">Build your own</td>
+                <td class="yes">✓ Pre-built</td>
+                <td class="yes">✓ Custom for your voice</td>
+            </tr>
+            <tr>
+                <td>Onboarding call</td>
+                <td class="no">—</td>
+                <td class="no">—</td>
+                <td class="yes">✓ 1 hour</td>
+            </tr>
+            <tr>
+                <td>Support</td>
+                <td>GitHub Issues</td>
+                <td>Email</td>
+                <td>Email + 30 days included</td>
+            </tr>
+            <tr>
+                <td>License</td>
+                <td>AGPL v3</td>
+                <td>AGPL v3</td>
+                <td>Commercial</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr class="divider">
+
+<div class="faq">
+    <h3>Questions</h3>
+
+    <div class="faq-item">
+        <div class="faq-q">Can I really use the Community plan for free?</div>
+        <div class="faq-a">Yes. The full source code is on GitHub under the AGPL v3 license. Clone it, run it, modify it — forever. You just need your own server and LLM API key.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What's the difference between Community and Pro?</div>
+        <div class="faq-a">Community is self-hosted — you run it on your own machine. Pro is cloud-hosted — we run it for you, include an LLM, configure email, and keep it updated. You just log in and use it.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What do I get with Business?</div>
+        <div class="faq-a">We set everything up for you: target market, email templates in your voice, CRM connection, outreach cadence, and a 1-hour onboarding call. You go from zero to fully operational in one session.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What does the AGPL license mean?</div>
+        <div class="faq-a">You can use, modify, and self-host JARVIS OS freely. If you run it as a service for others, you must share your modifications. If you want to keep modifications private (e.g., for a commercial product), you need a commercial license — contact us.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Can I upgrade later?</div>
+        <div class="faq-a">Absolutely. Start with Community, and upgrade to Pro or Business whenever you're ready. Your data stays yours — we can migrate your pipeline.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Do you offer a free trial for Pro?</div>
+        <div class="faq-a">Yes — 14 days, no credit card required. Try it risk-free.</div>
+    </div>
+</div>
+
+<section class="cta-banner">
+    <h3>Start building today</h3>
+    <p>Download the free template or join the Pro waitlist. Your AI operating system is 4 commands away.</p>
+    <a href="https://github.com/stevesimo41/jarvis-os-template">Get Started Free →</a>
+</section>
+
+<footer>
+    <p>JARVIS OS &copy; 2026 &middot; <a href="https://github.com/stevesimo41/jarvis-os-template">GitHub</a> &middot; <a href="mailto:hello@jarvisos.com">Contact</a> &middot; <a href="/legal/privacy">Privacy</a> &middot; <a href="/legal/terms">Terms</a></p>
+</footer>
+
+</body>
+</html>

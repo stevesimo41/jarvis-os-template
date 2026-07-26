@@ -110,6 +110,15 @@ jarvis-os/
 └── data/                # Runtime data (created automatically)
 ```
 
+## License
+
+JARVIS OS is dual-licensed:
+
+- **AGPL v3** (free) — self-host, modify, distribute under copyleft terms
+- **Commercial License** (paid) — use in proprietary products or offer as SaaS
+
+See [LICENSE](./LICENSE) for full AGPL v3 terms and [COMMERCIAL-LICENSE.md](./COMMERCIAL-LICENSE.md) for commercial licensing details.
+
 ## The JARVIS Philosophy
 
 1. **Human in the loop** — AI prepares, you approve. Always.
