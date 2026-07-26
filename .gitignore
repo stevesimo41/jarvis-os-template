@@ -16,6 +16,5 @@ Thumbs.db
 # Vercel
 .vercel/
 
-# Screenshots (add manually)
-public/assets/*.png
-public/assets/*.jpg
+# Screenshots (keep the landing/pricing screenshots, ignore temp ones)
+public/assets/screenshot-features.png

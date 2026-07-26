@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JARVIS OS — Your Personal AI Operating System</title>
     <meta name="description" content="An AI assistant that researches opportunities, reaches out to prospects, and manages your pipeline — with you in control. Self-host free or get it managed.">
+    <meta name="theme-color" content="#080b10">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="JARVIS">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/assets/icon-192.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/icon.svg">
     <meta property="og:title" content="JARVIS OS — Your Personal AI Operating System">
     <meta property="og:description" content="AI agents that find opportunities, enrich prospects, and run outreach — with human approval on every action.">
     <meta property="og:type" content="website">
@@ -195,6 +202,64 @@
             margin-top: 24px;
             font-size: 13px;
             color: #4a5568;
+        }
+
+        /* Product Preview */
+        .preview-section {
+            padding: 80px 48px;
+            text-align: center;
+        }
+
+        .preview-inner {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .preview-inner h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 32px;
+        }
+
+        .preview-image {
+            background: #0d1117;
+            border: 1px solid #1a1f2e;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .browser-chrome {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #161b22;
+            border-bottom: 1px solid #1a1f2e;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .browser-dot.red { background: #ff5f57; }
+        .browser-dot.yellow { background: #febc2e; }
+        .browser-dot.green { background: #28c840; }
+
+        .browser-url {
+            flex: 1;
+            text-align: center;
+            font-size: 12px;
+            color: #8892a4;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .preview-image img {
+            width: 100%;
+            display: block;
         }
 
         /* Terminal Preview */
@@ -602,20 +667,79 @@
             gap: 24px;
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 200;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
         @media (max-width: 768px) {
             .nav { padding: 16px 20px; }
-            .nav-links { gap: 12px; }
-            .nav-links a.btn-github { display: none; }
-            .hero { padding: 120px 24px 60px; }
+            .mobile-menu-btn { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: #0d1117;
+                border-left: 1px solid #1a1f2e;
+                flex-direction: column;
+                padding: 80px 32px 32px;
+                gap: 0;
+                transition: right 0.3s ease;
+                z-index: 150;
+            }
+            .nav-links.open { right: 0; }
+            .nav-links a {
+                padding: 14px 0;
+                border-bottom: 1px solid #1a1f2e;
+                font-size: 16px;
+            }
+            .nav-links .btn-github { display: none; }
+            .nav-links .btn-cta {
+                margin-top: 16px;
+                text-align: center;
+                border-bottom: none;
+            }
+            .hero { padding: 120px 24px 60px; min-height: auto; }
             .hero h2 { font-size: 36px; }
             .hero p { font-size: 16px; }
             .hero-buttons { flex-direction: column; align-items: center; }
+            .btn-hero { width: 100%; max-width: 300px; justify-content: center; }
             .pain-grid, .steps, .feature-grid, .use-grid {
                 grid-template-columns: 1fr;
             }
-            .terminal-section, .problem, .how, .features, .use-cases, .open-source, .cta-banner {
-                padding-left: 24px;
-                padding-right: 24px;
+            .terminal-section, .problem, .how, .features, .use-cases, .open-source, .cta-banner, .preview-section {
+                padding-left: 20px;
+                padding-right: 20px;
             }
             .features-header h3, .problem h3, .how h3, .use-cases h3, .open-source h3, .cta-banner h3 {
                 font-size: 28px;
@@ -635,12 +759,15 @@
         <div class="logo">J</div>
         <h1>JARVIS OS</h1>
     </div>
-    <div class="nav-links">
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
         <a href="#features">Features</a>
         <a href="#how">How It Works</a>
-        <a href="pricing.html">Pricing</a>
+        <a href="/pricing">Pricing</a>
         <a href="https://github.com/stevesimo41/jarvis-os-template" class="btn-github">GitHub</a>
-        <a href="https://github.com/stevesimo41/jarvis-os-template/archive/refs/heads/main.zip" class="btn-cta">Download Free</a>
+        <a href="https://github.com/stevesimo41/jarvis-os-template/archive/refs/heads/main.zip" class="btn-cta" data-plan="download">Download Free</a>
     </div>
 </nav>
 
@@ -685,6 +812,24 @@
             <div><span class="success">✓</span> <span class="info">JARVIS backend running on 127.0.0.1:3000</span></div>
             <div><span class="success">✓</span> <span class="info">Command Center: http://localhost:3000</span></div>
             <div><span class="success">✓</span> <span class="info">Agent Scheduler: checking every 3600s</span></div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Product Preview -->
+<section class="preview-section">
+    <div class="preview-inner">
+        <div class="eyebrow">Command Center</div>
+        <h3>Your AI operating system, at a glance</h3>
+        <div class="preview-image">
+            <div class="browser-chrome">
+                <div class="browser-dot red"></div>
+                <div class="browser-dot yellow"></div>
+                <div class="browser-dot green"></div>
+                <div class="browser-url">localhost:3000</div>
+            </div>
+            <img src="/assets/screenshot-command-center.png" alt="JARVIS OS Command Center" loading="lazy" />
         </div>
     </div>
 </section>
@@ -868,5 +1013,50 @@
 </footer>
 
 <script src="/js/checkout.js"></script>
+<script>
+// Mobile menu toggle
+(function() {
+    var btn = document.getElementById("mobileMenuBtn");
+    var links = document.getElementById("navLinks");
+    if (btn && links) {
+        btn.addEventListener("click", function() {
+            btn.classList.toggle("active");
+            links.classList.toggle("open");
+        });
+        // Close on link click
+        var navAnchors = links.querySelectorAll("a");
+        for (var i = 0; i < navAnchors.length; i++) {
+            navAnchors[i].addEventListener("click", function() {
+                btn.classList.remove("active");
+                links.classList.remove("open");
+            });
+        }
+    }
+})();
+
+// Register service worker
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function() {
+        navigator.serviceWorker.register("/sw.js")
+            .then(function(reg) {
+                console.log("[JARVIS PWA] Service Worker registered", reg.scope);
+            })
+            .catch(function(err) {
+                console.log("[JARVIS PWA] Service Worker registration failed", err);
+            });
+    });
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener("click", function(e) {
+        var target = document.querySelector(this.getAttribute("href"));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    });
+});
+</script>
 </body>
 </html>
