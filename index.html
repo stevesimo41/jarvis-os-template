@@ -8,7 +8,7 @@
     <meta property="og:title" content="JARVIS OS — Your Personal AI Operating System">
     <meta property="og:description" content="AI agents that find opportunities, enrich prospects, and run outreach — with human approval on every action.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jarvisos.com">
+    <meta property="og:url" content="https://stevesimo41.github.io/jarvis-os-template">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* Nav */
         .nav {
             display: flex;
             align-items: center;
@@ -36,15 +35,10 @@
             border-bottom: 1px solid rgba(26, 31, 46, 0.5);
         }
 
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
 
         .nav-brand .logo {
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             background: linear-gradient(135deg, #22c55e, #10b981);
             border-radius: 8px;
             display: flex;
@@ -55,48 +49,28 @@
             color: #080b10;
         }
 
-        .nav-brand h1 {
-            font-size: 20px;
-            font-weight: 600;
-            color: #fff;
-        }
+        .nav-brand h1 { font-size: 20px; font-weight: 600; color: #fff; }
 
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
 
         .nav-links a {
-            color: #8892a4;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s;
+            color: #8892a4; text-decoration: none; font-size: 14px; transition: color 0.2s;
         }
 
         .nav-links a:hover { color: #fff; }
 
         .nav-links .btn-github {
-            background: #1a1f2e;
-            color: #e0e0e0;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 500;
+            background: #1a1f2e; color: #e0e0e0; padding: 8px 16px; border-radius: 6px; font-weight: 500;
         }
 
         .nav-links .btn-github:hover { background: #252b3b; color: #fff; }
 
         .nav-links .btn-cta {
-            background: #22c55e;
-            color: #080b10;
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 600;
+            background: #22c55e; color: #080b10; padding: 8px 20px; border-radius: 6px; font-weight: 600;
         }
 
         .nav-links .btn-cta:hover { background: #16a34a; }
 
-        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -119,134 +93,69 @@
             pointer-events: none;
         }
 
-        .hero-content {
-            max-width: 800px;
-            position: relative;
-        }
+        .hero-content { max-width: 800px; position: relative; }
 
         .hero .eyebrow {
-            font-size: 13px;
-            letter-spacing: 3px;
-            color: #22c55e;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 24px;
+            font-size: 13px; letter-spacing: 3px; color: #22c55e;
+            text-transform: uppercase; font-weight: 600; margin-bottom: 24px;
         }
 
         .hero h2 {
-            font-size: 64px;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -1px;
+            font-size: 64px; font-weight: 700; color: #fff;
+            line-height: 1.1; margin-bottom: 24px; letter-spacing: -1px;
         }
 
         .hero h2 span {
             background: linear-gradient(135deg, #22c55e, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
 
         .hero p {
-            font-size: 20px;
-            color: #8892a4;
-            max-width: 580px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
+            font-size: 20px; color: #8892a4;
+            max-width: 580px; margin: 0 auto 40px; line-height: 1.7;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
         .btn-hero {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 16px 32px; border-radius: 8px;
+            font-size: 16px; font-weight: 600; text-decoration: none; transition: all 0.2s;
         }
 
-        .btn-hero-primary {
-            background: #22c55e;
-            color: #080b10;
-        }
-
+        .btn-hero-primary { background: #22c55e; color: #080b10; }
         .btn-hero-primary:hover { background: #16a34a; transform: translateY(-1px); }
 
-        .btn-hero-secondary {
-            background: #1a1f2e;
-            color: #e0e0e0;
-            border: 1px solid #333;
-        }
-
+        .btn-hero-secondary { background: #1a1f2e; color: #e0e0e0; border: 1px solid #333; }
         .btn-hero-secondary:hover { border-color: #22c55e; color: #22c55e; }
 
-        .hero-sub {
-            margin-top: 24px;
-            font-size: 13px;
-            color: #4a5568;
-        }
+        .hero-sub { margin-top: 24px; font-size: 13px; color: #4a5568; }
 
-        /* Terminal Preview */
-        .terminal-section {
-            padding: 0 48px 100px;
-            display: flex;
-            justify-content: center;
-        }
+        .terminal-section { padding: 0 48px 100px; display: flex; justify-content: center; }
 
         .terminal {
-            background: #0d1117;
-            border: 1px solid #1a1f2e;
-            border-radius: 12px;
-            max-width: 700px;
-            width: 100%;
-            overflow: hidden;
+            background: #0d1117; border: 1px solid #1a1f2e; border-radius: 12px;
+            max-width: 700px; width: 100%; overflow: hidden;
         }
 
         .terminal-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 16px;
-            background: #161b22;
-            border-bottom: 1px solid #1a1f2e;
+            display: flex; align-items: center; gap: 8px;
+            padding: 12px 16px; background: #161b22; border-bottom: 1px solid #1a1f2e;
         }
 
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #333;
-        }
-
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; background: #333; }
         .terminal-dot.red { background: #ff5f57; }
         .terminal-dot.yellow { background: #febc2e; }
         .terminal-dot.green { background: #28c840; }
 
         .terminal-title {
-            flex: 1;
-            text-align: center;
-            font-size: 12px;
-            color: #8892a4;
+            flex: 1; text-align: center; font-size: 12px; color: #8892a4;
             font-family: 'SF Mono', 'Fira Code', monospace;
         }
 
         .terminal-body {
-            padding: 24px;
-            font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.8;
-            color: #e0e0e0;
+            padding: 24px; font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 14px; line-height: 1.8; color: #e0e0e0;
         }
 
         .terminal-body .prompt { color: #22c55e; }
@@ -255,294 +164,82 @@
         .terminal-body .success { color: #22c55e; }
         .terminal-body .info { color: #60a5fa; }
 
-        /* Problem Section */
-        .problem {
-            padding: 100px 48px;
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
+        .problem { padding: 100px 48px; max-width: 900px; margin: 0 auto; text-align: center; }
 
         .eyebrow {
-            font-size: 12px;
-            letter-spacing: 3px;
-            color: #22c55e;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 16px;
+            font-size: 12px; letter-spacing: 3px; color: #22c55e;
+            text-transform: uppercase; font-weight: 600; margin-bottom: 16px;
         }
 
         .problem h3 {
-            font-size: 36px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 48px;
-            line-height: 1.3;
+            font-size: 36px; font-weight: 700; color: #fff;
+            margin-bottom: 48px; line-height: 1.3;
         }
 
-        .pain-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            text-align: left;
-        }
+        .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: left; }
 
-        .pain-card {
-            padding: 24px;
-            border-left: 2px solid #ef4444;
-        }
+        .pain-card { padding: 24px; border-left: 2px solid #ef4444; }
+        .pain-card h4 { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        .pain-card p { font-size: 14px; color: #8892a4; line-height: 1.6; }
 
-        .pain-card h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 8px;
-        }
+        .how { padding: 100px 48px; background: linear-gradient(180deg, #080b10 0%, #0a0f14 100%); }
+        .how-inner { max-width: 900px; margin: 0 auto; text-align: center; }
 
-        .pain-card p {
-            font-size: 14px;
-            color: #8892a4;
-            line-height: 1.6;
-        }
+        .how h3 { font-size: 36px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+        .how > .how-inner > p { font-size: 16px; color: #8892a4; margin-bottom: 64px; }
 
-        /* How It Works */
-        .how {
-            padding: 100px 48px;
-            background: linear-gradient(180deg, #080b10 0%, #0a0f14 100%);
-        }
+        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; text-align: left; }
 
-        .how-inner {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .how h3 {
-            font-size: 36px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 16px;
-        }
-
-        .how > .how-inner > p {
-            font-size: 16px;
-            color: #8892a4;
-            margin-bottom: 64px;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 48px;
-            text-align: left;
-        }
-
-        .step {
-            position: relative;
-        }
+        .step { position: relative; }
 
         .step-num {
-            width: 48px;
-            height: 48px;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 700;
-            color: #22c55e;
-            margin-bottom: 20px;
+            width: 48px; height: 48px; background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 700; color: #22c55e; margin-bottom: 20px;
         }
 
-        .step h4 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 8px;
-        }
+        .step h4 { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        .step p { font-size: 14px; color: #8892a4; line-height: 1.7; }
 
-        .step p {
-            font-size: 14px;
-            color: #8892a4;
-            line-height: 1.7;
-        }
+        .features { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+        .features-header { text-align: center; margin-bottom: 64px; }
 
-        /* Features */
-        .features {
-            padding: 100px 48px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+        .features-header h3 { font-size: 36px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+        .features-header p { font-size: 16px; color: #8892a4; }
 
-        .features-header {
-            text-align: center;
-            margin-bottom: 64px;
-        }
-
-        .features-header h3 {
-            font-size: 36px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 12px;
-        }
-
-        .features-header p {
-            font-size: 16px;
-            color: #8892a4;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
+        .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
 
         .feature-card {
-            background: #0d1117;
-            border: 1px solid #1a1f2e;
-            border-radius: 12px;
-            padding: 32px;
-            transition: border-color 0.2s;
+            background: #0d1117; border: 1px solid #1a1f2e; border-radius: 12px;
+            padding: 32px; transition: border-color 0.2s;
         }
 
-        .feature-card:hover {
-            border-color: rgba(34, 197, 94, 0.3);
-        }
+        .feature-card:hover { border-color: rgba(34, 197, 94, 0.3); }
 
         .feature-icon {
-            width: 44px;
-            height: 44px;
-            background: rgba(34, 197, 94, 0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            margin-bottom: 16px;
+            width: 44px; height: 44px; background: rgba(34, 197, 94, 0.1);
+            border-radius: 10px; display: flex; align-items: center;
+            justify-content: center; font-size: 20px; margin-bottom: 16px;
         }
 
-        .feature-card h4 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 8px;
-        }
+        .feature-card h4 { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        .feature-card p { font-size: 14px; color: #8892a4; line-height: 1.7; }
 
-        .feature-card p {
-            font-size: 14px;
-            color: #8892a4;
-            line-height: 1.7;
-        }
+        .use-cases { padding: 100px 48px; background: #0a0f14; }
+        .use-cases-inner { max-width: 900px; margin: 0 auto; text-align: center; }
 
-        /* Use Cases */
-        .use-cases {
-            padding: 100px 48px;
-            background: #0a0f14;
-        }
+        .use-cases h3 { font-size: 36px; font-weight: 700; color: #fff; margin-bottom: 48px; }
 
-        .use-cases-inner {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
+        .use-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: left; }
 
-        .use-cases h3 {
-            font-size: 36px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 48px;
-        }
+        .use-card { background: #0d1117; border: 1px solid #1a1f2e; border-radius: 12px; padding: 28px; }
+        .use-card .emoji { font-size: 28px; margin-bottom: 12px; }
+        .use-card h4 { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+        .use-card p { font-size: 13px; color: #8892a4; line-height: 1.6; }
 
-        .use-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            text-align: left;
-        }
-
-        .use-card {
-            background: #0d1117;
-            border: 1px solid #1a1f2e;
-            border-radius: 12px;
-            padding: 28px;
-        }
-
-        .use-card .emoji {
-            font-size: 28px;
-            margin-bottom: 12px;
-        }
-
-        .use-card h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 6px;
-        }
-
-        .use-card p {
-            font-size: 13px;
-            color: #8892a4;
-            line-height: 1.6;
-        }
-
-        /* Open Source */
-        .open-source {
-            padding: 100px 48px;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .open-source h3 {
-            font-size: 36px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 16px;
-        }
-
-        .open-source > p {
-            font-size: 16px;
-            color: #8892a4;
-            margin-bottom: 48px;
-        }
-
-        .os-badges {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .os-badge {
-            background: #0d1117;
-            border: 1px solid #1a1f2e;
-            border-radius: 8px;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .os-badge .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #22c55e;
-        }
-
-        .os-badge span {
-            font-size: 14px;
-            color: #e0e0e0;
-            font-weight: 500;
-        }
-
-        /* CTA Banner */
         .cta-banner {
-            padding: 100px 48px;
-            text-align: center;
-            position: relative;
+            padding: 100px 48px; text-align: center; position: relative;
         }
 
         .cta-banner::before {
@@ -557,50 +254,22 @@
             pointer-events: none;
         }
 
-        .cta-banner h3 {
-            font-size: 42px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 16px;
-            position: relative;
-        }
+        .cta-banner h3 { font-size: 42px; font-weight: 700; color: #fff; margin-bottom: 16px; position: relative; }
+        .cta-banner > p { font-size: 18px; color: #8892a4; margin-bottom: 40px; position: relative; }
+        .cta-banner .btn-hero { position: relative; }
 
-        .cta-banner > p {
-            font-size: 18px;
-            color: #8892a4;
-            margin-bottom: 40px;
-            position: relative;
-        }
+        .cta-sub { margin-top: 16px; font-size: 13px; color: #4a5568; position: relative; }
 
-        .cta-banner .btn-hero {
-            position: relative;
-        }
-
-        .cta-sub {
-            margin-top: 16px;
-            font-size: 13px;
-            color: #4a5568;
-            position: relative;
-        }
-
-        /* Footer */
         footer {
-            padding: 48px;
-            border-top: 1px solid #1a1f2e;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: #4a5568;
-            font-size: 13px;
+            padding: 48px; border-top: 1px solid #1a1f2e;
+            display: flex; align-items: center; justify-content: space-between;
+            color: #4a5568; font-size: 13px;
         }
 
         footer a { color: #8892a4; text-decoration: none; }
         footer a:hover { color: #fff; }
 
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
+        .footer-links { display: flex; gap: 24px; }
 
         @media (max-width: 768px) {
             .nav { padding: 16px 20px; }
@@ -610,21 +279,12 @@
             .hero h2 { font-size: 36px; }
             .hero p { font-size: 16px; }
             .hero-buttons { flex-direction: column; align-items: center; }
-            .pain-grid, .steps, .feature-grid, .use-grid {
-                grid-template-columns: 1fr;
+            .pain-grid, .steps, .feature-grid, .use-grid { grid-template-columns: 1fr; }
+            .terminal-section, .problem, .how, .features, .use-cases, .cta-banner {
+                padding-left: 24px; padding-right: 24px;
             }
-            .terminal-section, .problem, .how, .features, .use-cases, .open-source, .cta-banner {
-                padding-left: 24px;
-                padding-right: 24px;
-            }
-            .features-header h3, .problem h3, .how h3, .use-cases h3, .open-source h3, .cta-banner h3 {
-                font-size: 28px;
-            }
-            footer {
-                flex-direction: column;
-                gap: 16px;
-                text-align: center;
-            }
+            .features-header h3, .problem h3, .how h3, .use-cases h3, .cta-banner h3 { font-size: 28px; }
+            footer { flex-direction: column; gap: 16px; text-align: center; }
         }
     </style>
 </head>
@@ -638,17 +298,15 @@
     <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#how">How It Works</a>
-        <a href="pricing.html">Pricing</a>
+        <a href="pricing">Pricing</a>
         <a href="https://github.com/stevesimo41/jarvis-os-template" class="btn-github">GitHub</a>
         <a href="https://github.com/stevesimo41/jarvis-os-template/archive/refs/heads/main.zip" class="btn-cta">Download Free</a>
     </div>
 </nav>
 
-
-<!-- Hero -->
 <section class="hero">
     <div class="hero-content">
-        <div class="eyebrow">Open Source &middot; Self-Hosted &middot; AI-Powered</div>
+        <div class="eyebrow">Open Source · Self-Hosted · AI-Powered</div>
         <h2>Your AI assistant<br>that <span>actually works</span></h2>
         <p>JARVIS finds opportunities, enriches prospects, and runs your outreach pipeline — with you approving every action. No surprises. No spam. Just results.</p>
         <div class="hero-buttons">
@@ -659,12 +317,10 @@
                 See How It Works
             </a>
         </div>
-        <div class="hero-sub">Free under AGPL v3 &middot; <a href="https://github.com/stevesimo41/jarvis-os-template/archive/refs/heads/main.zip" style="color:#22c55e">Download free template</a> &middot; Runs on your machine</div>
+        <div class="hero-sub">Free under AGPL v3 &middot; Start with the open-source template &middot; Runs on your machine</div>
     </div>
 </section>
 
-
-<!-- Terminal Preview -->
 <section class="terminal-section">
     <div class="terminal">
         <div class="terminal-bar">
@@ -689,8 +345,6 @@
     </div>
 </section>
 
-
-<!-- Problem -->
 <section class="problem">
     <div class="eyebrow">The Problem</div>
     <h3>Business development is broken.<br>You're doing it all manually.</h3>
@@ -701,7 +355,7 @@
         </div>
         <div class="pain-card">
             <h4>Contact info is scattered</h4>
-            <p>Email here, phone there, LinkedIn profile somewhere else. You spend more time finding contact info than actually reaching out.</p>
+            <p>Email here, phone there, LinkedIn profile somewhere else. You spend more time finding contacts than actually reaching out.</p>
         </div>
         <div class="pain-card">
             <h4>Follow-ups fall through the cracks</h4>
@@ -710,8 +364,6 @@
     </div>
 </section>
 
-
-<!-- How It Works -->
 <section class="how" id="how">
     <div class="how-inner">
         <div class="eyebrow">How It Works</div>
@@ -737,8 +389,6 @@
     </div>
 </section>
 
-
-<!-- Features -->
 <section class="features" id="features">
     <div class="features-header">
         <div class="eyebrow">Features</div>
@@ -779,8 +429,6 @@
     </div>
 </section>
 
-
-<!-- Use Cases -->
 <section class="use-cases">
     <div class="use-cases-inner">
         <div class="eyebrow">Use Cases</div>
@@ -820,49 +468,20 @@
     </div>
 </section>
 
-
-<!-- Open Source -->
-<section class="open-source">
-    <div class="eyebrow">Open Source</div>
-    <h3>Yours to keep. Forever.</h3>
-    <p>JARVIS OS is fully open source under AGPL v3. Clone it, run it, modify it. Your data never leaves your machine. No subscriptions required.</p>
-    <div class="os-badges">
-        <div class="os-badge">
-            <div class="dot"></div>
-            <span>AGPL v3 License</span>
-        </div>
-        <div class="os-badge">
-            <div class="dot"></div>
-            <span>Self-Hosted</span>
-        </div>
-        <div class="os-badge">
-            <div class="dot"></div>
-            <span>Your Data Stays Yours</span>
-        </div>
-        <div class="os-badge">
-            <div class="dot"></div>
-            <span>No Vendor Lock-In</span>
-        </div>
-    </div>
-</section>
-
-
-<!-- CTA -->
 <section class="cta-banner">
     <h3>Start in 4 commands</h3>
     <p>Clone. Install. Configure. Launch. Your AI assistant is 60 seconds away.</p>
     <a href="https://jarvis-os.lemonsqueezy.com/checkout/buy/09df18ce-7b98-4996-955b-8373abdac1c2" class="btn-hero btn-hero-primary">
         Get JARVIS OS Pro
     </a>
-    <div class="cta-sub">Or <a href="https://github.com/stevesimo41/jarvis-os-template/archive/refs/heads/main.zip" style="color:#22c55e">download the free template</a> &middot; Open source &middot; Mac, Linux, Windows</div>
+    <div class="cta-sub">Or <a href="https://github.com/stevesimo41/jarvis-os-template/archive/refs/heads/main.zip" style="color:#22c55e">download the free template</a> · Open source · Mac, Linux, Windows</div>
 </section>
-
 
 <footer>
     <span>JARVIS OS &copy; 2026</span>
     <div class="footer-links">
         <a href="https://github.com/stevesimo41/jarvis-os-template">GitHub</a>
-        <a href="pricing.html">Pricing</a>
+        <a href="pricing">Pricing</a>
         <a href="mailto:hello@jarvisos.com">Contact</a>
     </div>
 </footer>
