@@ -73,42 +73,44 @@
 
         <nav id="mainNavigation">
 
-            <button class="nav-button active" onclick="loadModule('dashboard')">
+            <button class="nav-button active" data-module="dashboard">
                 <span>◈</span>
                 Command Center
             </button>
 
-            <button class="nav-button" onclick="loadModule('mission')">
+            <button class="nav-button" data-module="mission">
                 <span>△</span>
                 Daily Mission
             </button>
 
-            <button class="nav-button" onclick="loadModule('agent-hub')"><span>⬡</span> Agent Hub</button>
+            <button class="nav-button" data-module="agent-hub"><span>⬡</span> Agent Hub</button>
 
-            <button class="nav-button" onclick="loadModule('crm')">
+            <button class="nav-button" data-module="crm">
                 <span>▣</span>
                 CRM
             </button>
 
-            <button class="nav-button" onclick="loadModule('scheduler')"><span>◴</span> Scheduler</button>
+            <button class="nav-button" data-module="scheduler"><span>◴</span> Scheduler</button>
 
-            <button class="nav-button" onclick="loadModule('wallet')"><span>$</span> Wallet</button>
+            <button class="nav-button" data-module="avo-ideas"><span>◆</span> AVO Ideas</button>
 
-            <button class="nav-button" onclick="loadModule('activity')"><span>◐</span> Activity</button>
+            <button class="nav-button" data-module="activity"><span>◐</span> Activity</button>
 
-            <button class="nav-button" onclick="loadModule('chief')">
+            <button class="nav-button" data-module="chief">
                 <span>◎</span>
                 Chief of Staff
             </button>
 
-            <button class="nav-button" onclick="loadModule('social')"><span>◎</span> Social</button>
+            <button class="nav-button" data-module="social"><span>◎</span> Social</button>
 
-            <button class="nav-button" onclick="loadModule('chat')">
+            <button class="nav-button" data-module="chat">
                 <span>✦</span>
                 Ask JARVIS
             </button>
 
-            <button class="nav-button" onclick="loadModule('settings')"><span>⚙</span> Settings</button>
+            <button class="nav-button" data-module="wallet"><span>💰</span> Wallet</button>
+
+            <button class="nav-button" data-module="settings"><span>⚙</span> Settings</button>
 
         </nav>
 
@@ -128,6 +130,14 @@
 
     </aside>
 
+    <!-- Mobile bottom nav -->
+    <nav id="mobileNav" class="mobile-nav">
+        <button data-module="dashboard"><span>◈</span><small>Home</small></button>
+        <button data-module="mission"><span>△</span><small>Mission</small></button>
+        <button data-module="crm"><span>▣</span><small>CRM</small></button>
+        <button data-module="wallet"><span>💰</span><small>Wallet</small></button>
+        <button data-module="agent-hub"><span>⬡</span><small>Agents</small></button>
+    </nav>
 
     <main id="workspace">
 
@@ -314,7 +324,7 @@
 <script src="mission/mission.js"></script>
 <script src="agents/agents.js"></script>
 <script src="agents/workspace.js"></script>
-<script src="wallet/wallet.js"></script>
+<script src="avos/avos.js"></script>
 <script src="memory/memory.js"></script>
 <script src="activity/activity.js"></script>
 <script src="opportunities/opportunities.js"></script>
@@ -328,7 +338,9 @@
 <script src="social/social.js"></script>
 <script src="releases/releases.js"></script>
 <script src="scheduler/scheduler.js"></script>
-
+            <script src="avo-ideas/avoIdeas.js"></script>
+            <script src="avos/avoProjects.js"></script>
+<script src="wallet/wallet.js"></script>
 <script src="ui/navigation.js?v=57"></script>
 <script src="ui/layout.js?v=57"></script>
     <script src="./crm/crmFields.js"></script>

@@ -61,6 +61,43 @@ textarea {
 }
 
 
+/* MOBILE NAV */
+#mobileNav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #090c11;
+    border-top: 1px solid #263548;
+    justify-content: space-around;
+    padding: 6px 0 env(safe-area-inset-bottom, 6px);
+}
+
+#mobileNav button {
+    background: none;
+    border: none;
+    color: #586a9b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 10px;
+    font-size: 10px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#mobileNav button.active {
+    color: #79e6ba;
+}
+
+#mobileNav button span {
+    font-size: 20px;
+    line-height: 1;
+}
+
 /* SIDEBAR */
 
 #sidebar {
@@ -619,6 +656,14 @@ textarea {
 
     #sidebar {
         display: none;
+    }
+
+    #mobileNav {
+        display: flex;
+    }
+
+    #workspace {
+        padding-bottom: 72px;
     }
 
     .dashboard-grid {

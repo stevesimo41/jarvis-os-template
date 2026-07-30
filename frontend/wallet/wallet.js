@@ -1,130 +1,110 @@
-function loadWallet() {
-    const root = document.getElementById("dashboardRoot");
-    root.innerHTML = `
-        <div class="wallet-dashboard">
-            <div class="wallet-header">
-                <h2>Wallet & Sales</h2>
-                <p class="wallet-subtitle">Revenue tracking, products, and license management via Lemon Squeezy</p>
-            </div>
-            <div class="wallet-metrics-row" id="walletMetrics">
-                <div class="wallet-metric"><span class="metric-value" id="walletRevenue">—</span><span class="metric-label">Revenue</span></div>
-                <div class="wallet-metric"><span class="metric-value" id="walletOrders">—</span><span class="metric-label">Orders</span></div>
-                <div class="wallet-metric"><span class="metric-value" id="walletProducts">—</span><span class="metric-label">Products</span></div>
-                <div class="wallet-metric"><span class="metric-value" id="walletSubs">—</span><span class="metric-label">Subscriptions</span></div>
-            </div>
-            <div class="wallet-section"><h3>Products</h3><div id="walletProductList"><p class="wallet-empty">Loading...</p></div></div>
-            <div class="wallet-section"><h3>Recent Orders</h3><div id="walletOrderList"><p class="wallet-empty">Loading...</p></div></div>
-            <div class="wallet-section"><h3>Validate License Key</h3>
-                <div class="wallet-license-form">
-                    <input type="text" id="licenseKeyInput" placeholder="Enter license key..." class="wallet-input">
-                    <button onclick="validateLicense()" class="wallet-btn">Validate</button>
-                    <div id="licenseResult"></div>
-                </div>
-            </div>
-            <div class="wallet-section"><h3>Setup Instructions</h3>
-                <div class="wallet-setup-box">
-                    <p>To activate your Lemon Squeezy store, add these to your <code>.env</code>:</p>
-                    <pre>LEMON_SQUEEZY_API_KEY=your-api-key
-LEMON_SQUEEZY_STORE_ID=your-store-id
-LEMON_SQUEEZY_WEBHOOK_SECRET=your-webhook-secret</pre>
-                    <p>Get credentials from <a href="https://app.lemonsqueezy.com/settings/api" target="_blank">Lemon Squeezy API Settings</a></p>
-                </div>
-            </div>
-        </div>
-    `;
+(function () {
+    const escapeHtml = value => { const node = document.createElement("div"); node.textContent = String(value ?? ""); return node.innerHTML; };
 
-    fetchWalletData();
-}
-
-async function fetchWalletData() {
-    try {
-        const [statusRes, productsRes, ordersRes, subsRes] = await Promise.all([
-            fetch("/api/lemon-squeezy/status").then(r => r.json()).catch(() => ({ ok: false })),
-            fetch("/api/lemon-squeezy/products").then(r => r.json()).catch(() => ({ ok: false })),
-            fetch("/api/lemon-squeezy/orders").then(r => r.json()).catch(() => ({ ok: false })),
-            fetch("/api/lemon-squeezy/subscriptions").then(r => r.json()).catch(() => ({ ok: false }))
-        ]);
-
-        if (statusRes.ok) {
-            document.getElementById("walletRevenue").textContent = statusRes.data?.revenue ? `$${statusRes.data.revenue}` : "$0";
-        }
-
-        if (productsRes.ok && productsRes.data) {
-            const products = productsRes.data;
-            document.getElementById("walletProducts").textContent = products.length || 0;
-            renderProducts(products);
-        } else {
-            document.getElementById("walletProductList").innerHTML = '<p class="wallet-empty">No products found or API not configured</p>';
-        }
-
-        if (ordersRes.ok && ordersRes.data) {
-            const orders = ordersRes.data;
-            document.getElementById("walletOrders").textContent = orders.length || 0;
-            renderOrders(orders.slice(0, 10));
-        } else {
-            document.getElementById("walletOrderList").innerHTML = '<p class="wallet-empty">No orders yet</p>';
-        }
-
-        if (subsRes.ok && subsRes.data) {
-            document.getElementById("walletSubs").textContent = subsRes.data.length || 0;
-        }
-    } catch (e) {
-        document.getElementById("walletProductList").innerHTML = `<p class="wallet-empty wallet-error">Failed to load: ${e.message}</p>`;
+    async function apiGet(path) {
+        const authToken = sessionStorage.getItem("jarvis.authToken");
+        const headers = { "Content-Type": "application/json" };
+        if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
+        const res = await fetch(`/api/lemon-squeezy${path}`, { headers });
+        const payload = await res.json();
+        if (!payload.ok) throw new Error(payload.error || "Request failed");
+        return payload.data;
     }
-}
 
-function renderProducts(products) {
-    const container = document.getElementById("walletProductList");
-    if (!products.length) {
-        container.innerHTML = '<p class="wallet-empty">No products configured</p>';
-        return;
-    }
-    container.innerHTML = products.map(p => `
-        <div class="wallet-product-card">
-            <strong>${s(p.attributes?.name || "Unnamed")}</strong>
-            <span class="wallet-price">${p.attributes?.price ? `$${(p.attributes.price / 100).toFixed(2)}` : "—"}</span>
-            <span class="wallet-status ${p.attributes?.status || "draft"}">${p.attributes?.status || "draft"}</span>
-        </div>
-    `).join("");
-}
+    const storeUrl = "https://jarvis-os.lemonsqueezy.com";
 
-function renderOrders(orders) {
-    const container = document.getElementById("walletOrderList");
-    if (!orders.length) {
-        container.innerHTML = '<p class="wallet-empty">No orders yet — your first sale will appear here</p>';
-        return;
-    }
-    container.innerHTML = orders.map(o => `
-        <div class="wallet-order-row">
-            <span>${s(o.attributes?.user_email || "—")}</span>
-            <span>$${((o.attributes?.total || 0) / 100).toFixed(2)}</span>
-            <span class="wallet-status ${o.attributes?.status || ""}">${o.attributes?.status || "unknown"}</span>
-            <span class="wallet-date">${new Date(o.attributes?.created_at || o.attributes?.createdAt || Date.now()).toLocaleDateString()}</span>
-        </div>
-    `).join("");
-}
+    async function loadWallet() {
+        const workspace = document.getElementById("conversation");
+        workspace.innerHTML = `<section class="wallet-center"><article class="wallet-card">Loading JARVIS Wallet...</article></section>`;
 
-async function validateLicense() {
-    const key = document.getElementById("licenseKeyInput").value.trim();
-    const resultDiv = document.getElementById("licenseResult");
-    if (!key) { resultDiv.innerHTML = '<p class="wallet-error">Enter a license key</p>'; return; }
+        try {
+            const [revenue, orders, products, events, status] = await Promise.all([
+                apiGet("/revenue").catch(() => null),
+                apiGet("/orders?perPage=10").catch(() => null),
+                apiGet("/products").catch(() => null),
+                apiGet("/events?limit=15").catch(() => null),
+                apiGet("/status").catch(() => null)
+            ]);
 
-    resultDiv.innerHTML = '<p class="wallet-loading">Validating...</p>';
-    try {
-        const res = await fetch("/api/lemon-squeezy/validate-license", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ license_key: key })
-        });
-        const data = await res.json();
-        if (data.valid) {
-            resultDiv.innerHTML = `<p class="wallet-valid">✓ License valid — ${data.meta?.product_name || "product"} (${data.meta?.customer_name || "registered"})</p>`;
-        } else {
-            resultDiv.innerHTML = `<p class="wallet-error">✗ ${data.error || "Invalid license key"}</p>`;
+            workspace.innerHTML = `
+                <section class="wallet-center">
+                    <header>
+                        <div>
+                            <div class="eyebrow">JARVIS OS / WALLET</div>
+                            <h1>Revenue Wallet</h1>
+                            <p>Lemon Squeezy store revenue, orders, and license management.</p>
+                        </div>
+                        <span class="wallet-badge">${status?.configured ? `${storeUrl.replace("https://", "")}` : "DISCONNECTED"}</span>
+                    </header>
+
+                    <div class="wallet-grid">
+                        <div class="wallet-card">
+                            <div class="eyebrow">TOTAL REVENUE</div>
+                            <div class="wallet-value">${revenue ? revenue.currency === "USD" ? "$" : "" : "—"}${revenue ? Number(revenue.totalRevenue).toLocaleString(undefined, {minimumFractionDigits: 2}) : "—"}</div>
+                            <div class="wallet-value-sub">${revenue ? revenue.totalSales + " total sales" : "No data"}</div>
+                            <div class="wallet-status"><span class="status-dot ${status?.apiConnected ? "connected" : "disconnected"}"></span>${status?.apiConnected ? "API connected" : "API disconnected"}${status?.webhookConfigured ? " · Webhook configured" : " · Webhook not configured"}</div>
+                        </div>
+
+                        <div class="wallet-card">
+                            <div class="eyebrow">LAST 30 DAYS</div>
+                            <div class="wallet-value">${revenue ? (revenue.currency === "USD" ? "$" : "") + Number(revenue.thirtyDayRevenue).toLocaleString(undefined, {minimumFractionDigits: 2}) : "—"}</div>
+                            <div class="wallet-value-sub">${revenue ? revenue.thirtyDaySales + " sales in last 30 days" : "No data"}</div>
+                        </div>
+                    </div>
+
+                    <div class="wallet-card">
+                        <div class="eyebrow">PRODUCTS</div>
+                        <div class="wallet-product-grid">${products && products.length ? products.map(p => `
+                            <div class="wallet-product">
+                                <h3>${escapeHtml(p.name)}</h3>
+                                <div class="price">${escapeHtml(p.priceFormatted)}</div>
+                                <span class="status-badge ${p.testMode ? "test_mode" : "published"}">${p.testMode ? "TEST MODE" : "PUBLISHED"}</span>
+                                <br><a href="${storeUrl}/checkout/buy/${p.id === 1248439 ? "57fad3b1-b933-418f-8171-7b4954576298" : "09df18ce-7b98-4996-955b-8373abdac1c2"}" target="_blank">Checkout →</a>
+                            </div>
+                        `).join("") : `<div class="wallet-empty">No products found</div>`}</div>
+                    </div>
+
+                    <div class="wallet-grid">
+                        <div class="wallet-card">
+                            <div class="eyebrow">RECENT ORDERS</div>
+                            ${orders && orders.orders && orders.orders.length ? `
+                            <table class="wallet-table">
+                                <tr><th>Date</th><th>Email</th><th>Amount</th><th>Status</th></tr>
+                                ${orders.orders.map(o => `
+                                    <tr>
+                                        <td>${escapeHtml((o.createdAt || "").slice(0, 10))}</td>
+                                        <td>${escapeHtml(o.customerEmail)}</td>
+                                        <td>${o.currency === "USD" ? "$" : ""}${Number(o.total).toFixed(2)}</td>
+                                        <td>${escapeHtml(o.status)}</td>
+                                    </tr>
+                                `).join("")}
+                            </table>` : `<div class="wallet-empty">No orders yet — be the first sale!</div>`}
+                        </div>
+
+                        <div class="wallet-card">
+                            <div class="eyebrow">WEBHOOK EVENTS</div>
+                            <div class="wallet-events">${events && events.length ? events.map(e => `
+                                <div class="wallet-event">
+                                    <span class="wallet-event-type">${escapeHtml(e.type)}</span>
+                                    <span class="wallet-event-time">${escapeHtml((e.receivedAt || "").slice(0, 19).replace("T", " "))}</span>
+                                    <span class="wallet-event-id">${escapeHtml(e.id ? e.id.slice(0, 8) : "")}</span>
+                                </div>
+                            `).join("") : `<div class="wallet-empty">No webhook events received yet. Configure a webhook URL in Lemon Squeezy.</div>`}</div>
+                        </div>
+                    </div>
+
+                    <div class="wallet-card" style="text-align:center;color:#91a2b8;font-size:13px">
+                        <strong>Store:</strong> ${storeUrl} ·
+                        <strong>Products:</strong> ${products ? products.filter(p => !p.testMode).length + " published" : "—"} (${products ? products.filter(p => p.testMode).length + " test mode" : "—"}) ·
+                        <strong>Webhook:</strong> ${status?.webhookConfigured ? "Configured" : "Not configured"} ·
+                        <strong>Last refreshed:</strong> ${new Date().toLocaleTimeString()}
+                    </div>
+                </section>
+            `;
+        } catch (error) {
+            workspace.innerHTML = `<section class="wallet-center"><article class="wallet-card">${escapeHtml(error.message)}</article></section>`;
         }
-    } catch (e) {
-        resultDiv.innerHTML = `<p class="wallet-error">Error: ${e.message}</p>`;
     }
-}
 
-window.loadWallet = loadWallet;
+    window.loadWallet = loadWallet;
+}());

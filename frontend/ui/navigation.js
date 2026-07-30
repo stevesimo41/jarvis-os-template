@@ -16,19 +16,13 @@ function loadModule(moduleName, initialTab) {
         return;
     }
 
-    document.querySelectorAll(".nav-button").forEach(button => {
+    document.querySelectorAll(".nav-button, #mobileNav button").forEach(button => {
         button.classList.remove("active");
     });
 
-    const activeButton = Array.from(
-        document.querySelectorAll(".nav-button")
-    ).find(button =>
-        button.getAttribute("onclick")?.includes(`'${moduleName}'`)
-    );
-
-    if (activeButton) {
-        activeButton.classList.add("active");
-    }
+    document.querySelectorAll(`[data-module="${moduleName}"]`).forEach(button => {
+        button.classList.add("active");
+    });
 
     if (moduleName === "dashboard") {
         workspace.innerHTML = `
@@ -223,11 +217,15 @@ function loadModule(moduleName, initialTab) {
             if (typeof window.loadScheduler === "function") window.loadScheduler();
             break;
 
-        case "wallet":
-            pageTitle.textContent = "Wallet & Sales";
-            if (typeof window.loadWallet === "function") window.loadWallet();
+        case "avo-ideas":
+            pageTitle.textContent = "AVO Ideas";
+            if (typeof window.loadAvoIdeas === "function") window.loadAvoIdeas();
             break;
 
+        case "wallet":
+            pageTitle.textContent = "Revenue Wallet";
+            if (typeof window.loadWallet === "function") window.loadWallet();
+            break;
 
         default:
 
@@ -240,6 +238,15 @@ function loadModule(moduleName, initialTab) {
 
 window.loadModule = loadModule;
 
+function handleNavClick(e) {
+    const btn = e.target.closest("[data-module]");
+    if (!btn) return;
+    const module = btn.dataset.module;
+    if (module && typeof loadModule === "function") loadModule(module);
+}
+
+document.getElementById("mainNavigation")?.addEventListener("click", handleNavClick);
+document.getElementById("mobileNav")?.addEventListener("click", handleNavClick);
 
 window.addEventListener("DOMContentLoaded", () => {
 
