@@ -1,0 +1,53 @@
+{
+  "version": "2.0",
+  "defaultMode": "supervised",
+  "modes": ["dry-run", "shadow", "supervised", "bounded-autonomous"],
+  "actionAllowlist": [
+    "research_organization",
+    "research_organization_web",
+    "find_website",
+    "find_email",
+    "find_executive_email",
+    "create_internal_task",
+    "score_opportunity",
+    "prepare_research_packet",
+    "web_research",
+    "discover_prospects",
+    "update_crm_prospect",
+    "add_prospects_to_crm",
+    "prepare_outreach_package",
+    "send_outreach_email",
+    "follow_up_email",
+    "website_ping",
+    "schedule_meeting",
+    "record_response",
+    "record_outcome",
+    "request_reimbursement",
+    "run_prospecting_campaign"
+  ],
+  "sourceAllowlist": ["local-crm", "google-sheet-crm", "canonical-brain", "approved-research-source", "web"],
+  "externalActions": false,
+  "capital": {
+    "model": "reimbursement",
+    "description": "Agent identifies opportunities and prepares cases. Owner approves and funds manually. Agent tracks outcomes for ROI.",
+    "perDecisionCap": 0,
+    "dailyCap": 0,
+    "weeklyCap": 0,
+    "requiresOwnerApproval": true,
+    "autoApproveUnder": 0,
+    "trackingEnabled": true
+  },
+  "maximumBudget": 0,
+  "quotas": { "runsPerHour": 10, "actionsPerRun": 15 },
+  "suspension": {
+    "maximumFailures": 3,
+    "minimumConfidence": 60,
+    "staleEvidenceHours": 168
+  },
+  "schedules": [
+    { "id": "daily-venture-prospecting", "frequency": "daily", "enabled": true, "action": "discover_prospects", "ventureId": "well-noticed" },
+    { "id": "weekly-opportunity-review", "frequency": "weekly", "enabled": true, "action": "discover_prospects" },
+    { "id": "daily-crm-review", "frequency": "daily", "enabled": true, "action": "research_organization_web" },
+    { "id": "weekly-market-scan", "frequency": "weekly", "enabled": true, "action": "web_research" }
+  ]
+}

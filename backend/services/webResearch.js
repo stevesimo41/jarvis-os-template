@@ -3,6 +3,53 @@ const activity = require("../brain/activityService");
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36";
 const REQUEST_TIMEOUT = 15000;
 
+let _puppeteer = null;
+function getPuppeteer() {
+    if (_puppeteer === null) {
+        try { _puppeteer = require("puppeteer"); } catch (_e) { _puppeteer = false; }
+    }
+    return _puppeteer || null;
+}
+
+async function searchWithPuppeteer(query) {
+    const puppeteer = getPuppeteer();
+    if (!puppeteer) return [];
+    let browser = null;
+    try {
+        browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"] });
+        const page = await browser.newPage();
+        await page.setUserAgent(USER_AGENT);
+        await page.goto(`https://duckduckgo.com/?q=${encodeURIComponent(query)}&ia=web`, { waitUntil: "domcontentloaded", timeout: 12000 });
+        await new Promise(r => setTimeout(r, 3000));
+        const results = await page.evaluate(() => {
+            const items = [];
+            const seen = new Set();
+            const candidates = document.querySelectorAll("article,li[data-layout='organic'],div[data-testid='result']");
+            for (const el of candidates) {
+                const a = el.querySelector("a[href]");
+                if (!a) continue;
+                const href = a.href || "";
+                if (!href.startsWith("http") || href.includes("duckduckgo.com") || href.includes("google.com")) continue;
+                if (seen.has(href)) continue;
+                seen.add(href);
+                const titleEl = el.querySelector("h2,a[data-testid='result-title-a']");
+                const title = (titleEl || a).textContent?.trim() || "";
+                const snippetEl = el.querySelector("[data-result='snippet'],span[class*='snippet'],div[class*='snippet']");
+                const snippet = snippetEl?.textContent?.trim() || "";
+                if (title.length > 3 && title.length < 200 && !title.includes("{")) {
+                    items.push({ title, url: href, snippet });
+                }
+            }
+            return items.slice(0, 10);
+        });
+        return results;
+    } catch (_e) {
+        return [];
+    } finally {
+        if (browser) await browser.close().catch(() => {});
+    }
+}
+
 async function fetchPage(url) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
@@ -56,20 +103,23 @@ function extractUrls(html) {
 async function searchWeb(query) {
     const searchQuery = encodeURIComponent(query);
 
-    const startpageResults = await searchStartpage(searchQuery);
-    if (startpageResults.length > 0) return startpageResults;
+    const puppeteerResults = await searchWithPuppeteer(query);
+    if (puppeteerResults.length > 0) return puppeteerResults;
+
+    const searxResults = await searchSearx(searchQuery);
+    if (searxResults.length > 0) return searxResults;
 
     const ddgResults = await searchDuckDuckGo(searchQuery);
     if (ddgResults.length > 0) return ddgResults;
 
-    const braveResults = await searchBrave(searchQuery);
-    if (braveResults.length > 0) return braveResults;
-
-    const googleResults = await searchGoogle(searchQuery);
-    if (googleResults.length > 0) return googleResults;
-
     const liteResults = await searchDuckDuckGoLite(searchQuery);
-    return liteResults;
+    if (liteResults.length > 0) return liteResults;
+
+    const startpageResults = await searchStartpage(searchQuery);
+    if (startpageResults.length > 0) return startpageResults;
+
+    const braveResults = await searchBrave(searchQuery);
+    return braveResults;
 }
 
 async function searchDuckDuckGo(searchQuery) {
@@ -265,6 +315,65 @@ async function researchOrganization(name, website) {
     return findings;
 }
 
+const GENERIC_DOMAIN_KEYWORDS = ["google", "facebook", "yelp", "github", "linkedin", "twitter", "instagram", "pinterest", "yellowpages", "manta", "bbb", "chamber", "nextdoor", "tripadvisor", "blog", "wordpress", "wix", "squarespace", "medium", "hubspot", "clutch", "capterra", "g2", "softwareadvice", "getapp", "trustpilot", "sitejabber"];
+
+function extractCompanyName(result) {
+    const title = (result.title || "").trim();
+    const url = (result.url || "").trim();
+    if (!title || title.length < 3 || !url) return null;
+
+    if (/^\d+\s+(best|top|list|directory|review|companies|contractors|agencies)/i.test(title)) return null;
+    if (/(jobs?|hiring|careers?)\s+(in|at|near)\b/i.test(title)) return null;
+
+    try {
+        const parsed = new URL(url);
+        const path = parsed.pathname.replace(/\/+$/, "");
+        const pathSegments = path.split("/").filter(Boolean);
+
+        if (pathSegments.length > 2) return null;
+        if (/\/(blog|article|news|directory|listing|review|jobs?|careers?|top|best|list|forum|wiki|category|tag|author|locations?|services?)\b/i.test(path)) return null;
+
+        const hostname = parsed.hostname.replace(/^www\./, "").toLowerCase();
+        if (GENERIC_DOMAIN_KEYWORDS.some(d => hostname.includes(d))) return null;
+        if (/\b(reviews?|blog|directory|wiki|forum|listings?)\b/.test(hostname)) return null;
+
+        const parts = title.split(/ [-–|·] /);
+        let name = (parts[0] || "").trim();
+
+        if (isPlaceholderName(name)) return null;
+
+        const descriptionPattern = /\b(services?|agency|consulting|solutions?|audits?|consultants?|company|marketing|seo|crm|automation|optimization|implementation)\b/i;
+        if (descriptionPattern.test(name)) {
+            if (parts.length > 1) {
+                const second = parts[1].trim();
+                if (second.length >= 3 && !descriptionPattern.test(second) && !/^(in|for|near|at|and|of|the|a)\b/i.test(second)) {
+                    return second;
+                }
+            }
+            return null;
+        }
+
+        if (name.length < 3) return null;
+        if (/\.\.\./.test(name) || /(&amp;|&\s*)$/.test(name)) return null;
+        if (/\b(?:in|near|for)\s+(Columbus|Ohio|Central\s*Ohio)\b/i.test(name)) return null;
+        if (/^(?:Real Estate|Home Inspector|Home Inspection|Professional|Residential|Commercial)\b/i.test(name)) return null;
+        name = name.replace(/^Welcome to\s+/i, "").trim();
+        if (name.length < 3) return null;
+        return name;
+    } catch {
+        return null;
+    }
+}
+
+function isPlaceholderName(name) {
+    const placeholders = ["unknown", "n/a", "tbd", "test", "example", "sample", "company", "business", "organization", "placeholder", "lorem ipsum", "foo", "bar", "abc", "xyz"];
+    const trimmed = name.trim();
+    if (trimmed.length < 3) return true;
+    if (placeholders.includes(trimmed.toLowerCase())) return true;
+    if (/^\d+\s+(best|top|list of|directory|reviews|companies|contractors|agencies)\b/i.test(trimmed)) return true;
+    return false;
+}
+
 async function discoverProspects(query, location, limit) {
     const max = Math.min(Math.max(Number(limit) || 10, 1), 25);
     const fullQuery = location ? `${query} ${location}` : query;
@@ -272,8 +381,10 @@ async function discoverProspects(query, location, limit) {
     const prospects = [];
 
     for (const result of searchResults.slice(0, max)) {
+        const name = extractCompanyName(result);
+        if (!name) continue;
         const prospect = {
-            name: result.title.split(" - ")[0].split(" | ")[0].trim(),
+            name,
             source: "web-discovery",
             sourceUrl: result.url,
             snippet: result.snippet,

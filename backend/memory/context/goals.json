@@ -1,0 +1,15 @@
+{
+    "goals": [],
+    "vision": {
+        "mission": "Build and operate autonomous AI systems that serve people and amplify human potential.",
+        "primaryFocus": "Configure and extend JARVIS OS to match your unique workflow, ventures, and priorities.",
+        "endState": "JARVIS autonomously manages prospecting, outreach, scheduling, and communications across your ventures while you focus on high-level strategy.",
+        "phases": [
+            {
+                "name": "Setup",
+                "status": "current",
+                "focus": "Run the discovery agent, configure your API keys, define your ventures"
+            }
+        ]
+    }
+}

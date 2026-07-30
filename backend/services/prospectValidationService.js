@@ -6,24 +6,82 @@ const PLACEHOLDER_NAMES = [
     "lorem ipsum", "foo", "bar", "abc", "xyz"
 ];
 
+const CATEGORY_PREFIXES = [
+    "home ", "kitchen ", "bath ", "basement ", "roofing ", "remodel",
+    "landscape ", "lawn ", "deck ", "fence ", "painting ", "floor",
+    "window ", "door ", "garage ", "carpet ", "concrete ", "masonry",
+    "plumbing ", "electric ", "hvac ", "heating ", "cooling ", "ac ",
+    "cleaning ", "junk ", "moving ", "storage ",
+    "best ", "top ", "affordable ", "cheap ", "premium ", "luxury ",
+    "professional ", "expert ", "quality ", "reliable ",
+    "full[- ]service ", "custom ",
+];
+
 const GENERIC_EMAIL_PATTERNS = [
     /^info@/, /^contact@/, /^admin@/, /^support@/,
     /^hello@/, /^office@/, /^mail@/, /^webmaster@/
 ];
+
+const PLACEHOLDER_EMAIL_DOMAINS = [
+    "domain.com", "domainname.com", "yourdomain.com",
+    "example.com", "test.com", "sample.com"
+];
+
+const PLACEHOLDER_EMAIL_PATTERNS = [
+    /^user@/, /^email@/, /^name@/, /^your@/, /^you@/
+];
+
+const ANALYTICS_EMAIL_PATTERNS = [
+    /@sentry-next\./, /@analytics\./, /@tracking\./,
+    /@notification\./, /@noreply\./, /@no-reply\./
+];
+
+function isCityOnlyName(name) {
+    const match = name.match(/^(the\s+)?([a-zA-Z.\s'-]+?)(,\s*)?\s*(OH|Ohio)\s*$/i);
+    if (!match) return false;
+    const cityPart = match[2].trim();
+    const cityWords = cityPart.split(/\s+/).filter(w => w.length > 0);
+    return cityWords.length <= 2 && !/[A-Z]{3,}/.test(cityPart);
+}
+
+function isGenericCategoryName(name) {
+    const categoryWords = ["home", "kitchen", "bath", "basement", "roofing", "landscape", "lawn", "deck", "fence", "painting", "flooring", "window", "door", "garage", "carpet", "concrete", "masonry", "plumbing", "electrical", "hvac", "heating", "cooling", "cleaning", "junk", "moving", "storage", "remodel", "renovation", "remodeling", "renovations", "construction", "contractor", "contractors", "services", "service", "company", "companies", "solution", "solutions", "pro", "pros", "specialist", "specialists", "experts", "professionals", "design", "build", "custom", "remodelers", "renovator", "renovators", "restoration", "replacement", "improvement", "improvements", "additions", "repair", "repairs", "cabinetry", "cabinets", "countertops", "countertop", "systems", "acrylic", "floor", "glass", "tile", "gutters", "siding", "insulation", "waterproofing", "paving", "driveway", "lighting", "closet", "cabinet", "stone", "marble", "granite", "trim", "molding", "blinds", "shutters", "awnings"];
+    const locationWords = ["columbus", "dublin", "worthington", "gahanna", "westerville", "hilliard", "delaware", "newark", "pataskala", "pickerington", "reynoldsburg", "grovecity", "cincinnati", "dayton", "toledo", "cleveland", "akron", "central", "ohio", "oh"];
+    const stopWords = ["the", "and", "for", "with", "your", "our", "its", "all", "inc", "llc", "ltd", "in", "of", "to", "a", "an"];
+    const lower = name.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
+    const words = lower.split(/\s+/).filter(w => w.length > 2 && !stopWords.includes(w));
+    const significant = words.filter(w => !locationWords.includes(w));
+    if (significant.length === 0) return true;
+    const nonGeneric = significant.filter(w => !categoryWords.includes(w));
+    return nonGeneric.length === 0;
+}
 
 function isPlaceholderName(name) {
     if (!name || typeof name !== "string") return true;
     const trimmed = name.trim();
     if (trimmed.length < 3) return true;
     if (PLACEHOLDER_NAMES.includes(trimmed.toLowerCase())) return true;
-    if (/^\d+\s/.test(trimmed)) return true;
+    if (/^\d+\s+(best|top|list of|directory|reviews|companies|contractors|agencies)\b/i.test(trimmed)) return true;
     if (/\b(best|top \d+|list of|directory|reviews)\b/i.test(trimmed)) return true;
+    if (isCityOnlyName(trimmed)) return true;
+    if (isGenericCategoryName(trimmed)) return true;
     return false;
 }
 
 function isGenericEmail(email) {
     if (!email || typeof email !== "string") return false;
     return GENERIC_EMAIL_PATTERNS.test(email.toLowerCase().trim());
+}
+
+function isPlaceholderEmail(email) {
+    if (!email || typeof email !== "string") return true;
+    const lower = email.toLowerCase().trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lower)) return true;
+    const domain = lower.split("@")[1];
+    if (PLACEHOLDER_EMAIL_DOMAINS.includes(domain)) return true;
+    if (PLACEHOLDER_EMAIL_PATTERNS.some(p => p.test(lower))) return true;
+    if (ANALYTICS_EMAIL_PATTERNS.some(p => p.test(lower))) return true;
+    return false;
 }
 
 function extractDomain(email) {
@@ -79,6 +137,8 @@ async function validateProspect(prospect, options = {}) {
         errors.push("Email address is required for outreach.");
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         errors.push(`Invalid email format: "${email}"`);
+    } else if (isPlaceholderEmail(email)) {
+        errors.push(`Placeholder/invalid email: "${email}" — cannot be used for outreach`);
     }
 
     if (email && name && !isPlaceholderName(name)) {
@@ -115,4 +175,4 @@ async function validateProspect(prospect, options = {}) {
     return { valid, errors, warnings, confidence };
 }
 
-module.exports = { validateProspect, isPlaceholderName, isGenericEmail, extractDomain, companyMatchesEmailDomain, normalizeCompanyName, PLACEHOLDER_NAMES };
+module.exports = { validateProspect, isPlaceholderName, isGenericEmail, isPlaceholderEmail, extractDomain, companyMatchesEmailDomain, normalizeCompanyName, isCityOnlyName, isGenericCategoryName, PLACEHOLDER_NAMES };

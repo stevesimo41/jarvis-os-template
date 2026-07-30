@@ -1,0 +1,12 @@
+const express = require("express");
+const { requireRole } = require("../auth/localAuth");
+const autonomy = require("../autonomy/autonomyService");
+const audit = require("../governance/auditLog");
+const router = express.Router();
+router.get("/status", (_req, res) => res.json({ ok: true, data: autonomy.status() }));
+router.post("/evaluate", ...requireRole("operator"), (req, res) => res.json({ ok: true, data: autonomy.evaluate(req.body) }));
+router.post("/run", ...requireRole("operator"), (req, res) => { const result = autonomy.run(req.body || {}, req.auth.name); audit.append("autonomy_run_evaluated", { actor:req.auth.name, action:req.body?.action, requestId:req.id, outcome:result.evaluation.allowed?"prepared":"rejected" }); res.status(result.evaluation.allowed ? 200 : 409).json({ ok: result.evaluation.allowed, data: result }); });
+router.post("/deploy", ...requireRole("owner"), (req, res) => { if (req.body?.confirmation !== "DEPLOY") return res.status(400).json({ok:false,error:"confirmation must exactly equal DEPLOY"}); try { const state=autonomy.deploy(req.body.mode,req.auth.name); audit.append("autonomy_mode_changed",{actor:req.auth.name,mode:state.mode,requestId:req.id}); return res.json({ok:true,data:state}); } catch(error){return res.status(409).json({ok:false,error:error.message});} });
+router.post("/suspend", ...requireRole("owner"), (req,res)=>{if(req.body?.confirmation!=="SUSPEND")return res.status(400).json({ok:false,error:"confirmation must exactly equal SUSPEND"});return res.json({ok:true,data:autonomy.suspend(req.body.reason||"Owner suspension",req.auth.name)});});
+router.post("/messages", ...requireRole("operator"), (req,res)=>{const message=autonomy.message(req.body||{},req.auth.name);audit.append("agent_message_recorded",{actor:req.auth.name,requestId:req.id});res.status(201).json({ok:true,data:message});});
+module.exports = router;

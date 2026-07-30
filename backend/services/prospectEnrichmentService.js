@@ -1,5 +1,6 @@
 const webResearch = require("./webResearch");
 const activity = require("../brain/activityService");
+const learning = require("./learningService");
 
 const LINKEDIN_TITLE_PATTERNS = [
     /(?:owner|president|ceo|founder|principal|general\s+manager|managing\s+director|chief\s+\w+\s+officer|vp|vice\s+president|director)/i
@@ -78,7 +79,8 @@ async function enrichProspect(prospect) {
         executiveTitle: prospect.executiveTitle || null,
         googleReviewCount: prospect.googleReviewCount || null,
         city: prospect.city || prospect.City || null,
-        sources: []
+        sources: [],
+        allEmails: []
     };
 
     try {
@@ -87,6 +89,19 @@ async function enrichProspect(prospect) {
         if (targetUrl) {
             const html = await webResearch.fetchPage(targetUrl).catch(() => null);
             if (html) {
+                const titleRaw = html.match(/<title>([^<]*)<\/title>/i);
+                if (titleRaw) {
+                    const cleaned = titleRaw[1].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+                    const parts = cleaned.split(/\s*[|–—-]\s*/).filter(Boolean);
+                    const nameCandidates = parts.filter(p => {
+                        const l = p.toLowerCase();
+                        return p.length > 4 && !["home", "about", "contact", "services", "welcome"].includes(l);
+                    });
+                    if (nameCandidates.length > 0) {
+                        result.correctedName = nameCandidates[0].trim();
+                        result.sources.push({ type: "website-title", url: targetUrl });
+                    }
+                }
                 const text = webResearch.extractText(html);
 
                 const emails = webResearch.extractEmails(text);
@@ -94,6 +109,7 @@ async function enrichProspect(prospect) {
                     result.email = emails[0];
                     result.sources.push({ type: "website-email", url: targetUrl });
                 }
+                result.allEmails = emails.slice(0, 3);
 
                 const phones = webResearch.extractPhones(text);
                 if (phones.length > 0 && !result.phone) {
@@ -150,10 +166,12 @@ async function enrichProspect(prospect) {
 
                     const text = webResearch.extractText(html);
 
-                    if (!result.email) {
-                        const emails = webResearch.extractEmails(text);
-                        if (emails.length > 0) {
-                            result.email = emails[0];
+                    if (!result.email || result.allEmails.length < 3) {
+                        const searchEmails = webResearch.extractEmails(text);
+                        const newEmails = searchEmails.filter(e => !result.allEmails.includes(e));
+                        result.allEmails = [...result.allEmails, ...newEmails].slice(0, 3);
+                        if (!result.email && searchEmails.length > 0) {
+                            result.email = searchEmails[0];
                             result.sources.push({ type: "web-search-email", url: sr.url });
                         }
                     }
@@ -204,7 +222,17 @@ async function enrichProspect(prospect) {
             sourcesCount: result.sources.length
         });
 
-        return { enriched: true, data: result };
+        const learned = learning.applyPatterns(result, { name });
+        for (const k of ["_learnedTitle", "_learnedName", "_learnedCompanyName"]) {
+            if (learned[k]) {
+                activity.append("observed", `Learning applied: ${k.replace("_learned","")} corrected for ${name}`, {
+                    source: "learning-service",
+                    field: k, company: name
+                });
+            }
+        }
+
+        return { enriched: true, data: learned };
     } catch (error) {
         activity.append("observed", `Prospect enrichment failed: ${name}`, {
             source: "prospect-enrichment",

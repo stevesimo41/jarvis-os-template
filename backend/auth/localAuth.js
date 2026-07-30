@@ -12,7 +12,7 @@ function configuredIdentities() {
     return [
         {
             role: "owner",
-            name: process.env.JARVIS_OWNER_NAME || "steve",
+            name: process.env.JARVIS_OWNER_NAME || "owner",
             token: process.env.JARVIS_OWNER_TOKEN || ""
         },
         {

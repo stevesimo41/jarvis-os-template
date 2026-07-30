@@ -1,0 +1,32 @@
+.wallet-dashboard { padding: 20px; }
+.wallet-header { margin-bottom: 24px; }
+.wallet-header h2 { margin: 0 0 4px; font-size: 1.5rem; color: var(--accent, #fff); }
+.wallet-subtitle { color: var(--text-dim, #889); font-size: 0.85rem; }
+.wallet-metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.wallet-metric { background: var(--bg-card, #141820); border: 1px solid var(--border, #2a2f3a); border-radius: 8px; padding: 16px; text-align: center; }
+.metric-value { display: block; font-size: 1.8rem; font-weight: 700; color: var(--accent, #fff); }
+.metric-label { display: block; font-size: 0.75rem; color: var(--text-dim, #889); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+.wallet-section { background: var(--bg-card, #141820); border: 1px solid var(--border, #2a2f3a); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.wallet-section h3 { margin: 0 0 12px; font-size: 1rem; color: var(--accent, #fff); }
+.wallet-empty { color: var(--text-dim, #889); font-size: 0.85rem; padding: 8px 0; }
+.wallet-error { color: #e55; }
+.wallet-valid { color: #5e5; }
+.wallet-loading { color: var(--text-dim, #889); }
+.wallet-product-card { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border, #2a2f3a); }
+.wallet-product-card:last-child { border-bottom: none; }
+.wallet-price { margin-left: auto; font-weight: 600; }
+.wallet-status { font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+.wallet-status.published { background: #1a3a1a; color: #5e5; }
+.wallet-status.draft { background: #3a3a1a; color: #ee5; }
+.wallet-status.paid { background: #1a2a3a; color: #5af; }
+.wallet-order-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border, #2a2f3a); font-size: 0.85rem; }
+.wallet-order-row:last-child { border-bottom: none; }
+.wallet-date { margin-left: auto; color: var(--text-dim, #889); font-size: 0.75rem; }
+.wallet-license-form { display: flex; gap: 8px; flex-wrap: wrap; }
+.wallet-input { flex: 1; min-width: 200px; padding: 8px 12px; background: var(--bg, #0a0d14); border: 1px solid var(--border, #2a2f3a); border-radius: 4px; color: #fff; font-family: inherit; }
+.wallet-btn { padding: 8px 16px; background: var(--accent, #2a5fcf); color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+.wallet-btn:hover { opacity: 0.85; }
+.wallet-setup-box { background: var(--bg, #0a0d14); border-radius: 6px; padding: 16px; }
+.wallet-setup-box pre { background: #0a0d14; border: 1px solid var(--border, #2a2f3a); padding: 8px; border-radius: 4px; overflow-x: auto; font-size: 0.8rem; }
+.wallet-setup-box a { color: var(--accent, #2a5fcf); }
+#licenseResult { width: 100%; margin-top: 8px; }

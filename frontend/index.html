@@ -13,18 +13,42 @@
 
 <script>
 (function() {
+    var SW_CACHE = "jarvis-shell-v65";
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            registrations.forEach(function(reg) {
+                if (reg.active && reg.active.scriptURL.indexOf(SW_CACHE.replace("jarvis-shell-","")) === -1) {
+                    reg.unregister();
+                }
+            });
+        });
+    }
     if ("caches" in window) {
         caches.keys().then(function(names) {
             names.forEach(function(name) {
-                caches.delete(name);
+                if (name !== SW_CACHE) caches.delete(name);
             });
         });
     }
 })();
 </script>
 
-<link rel="stylesheet" href="css/jarvis.css">
-
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="./crm/crm.css">
+<link rel="stylesheet" href="./releases/releases.css">
+<link rel="stylesheet" href="./activity/activity.css">
+<link rel="stylesheet" href="./opportunities/opportunities.css">
+<link rel="stylesheet" href="./mobile/mobile.css">
+<link rel="stylesheet" href="./voice/voice.css">
+<link rel="stylesheet" href="./operations/operations.css">
+<link rel="stylesheet" href="./readiness/readiness.css">
+<link rel="stylesheet" href="./production-agents/productionAgents.css">
+<link rel="stylesheet" href="./settings/settings.css">
+<link rel="stylesheet" href="./agent-hub/agentHub.css">
+<link rel="stylesheet" href="./social/social.css">
+<link rel="stylesheet" href="./chief/chief.css">
+<link rel="stylesheet" href="./mission/mission.css">
+<link rel="stylesheet" href="./wallet/wallet.css">
 </head>
 
 <body>
@@ -50,29 +74,41 @@
         <nav id="mainNavigation">
 
             <button class="nav-button active" onclick="loadModule('dashboard')">
-                <span>\u25c8</span>
+                <span>◈</span>
                 Command Center
             </button>
 
-            <button class="nav-button" onclick="loadModule('agent-hub')">
-                <span>\u2b21</span>
-                Agent Hub
+            <button class="nav-button" onclick="loadModule('mission')">
+                <span>△</span>
+                Daily Mission
             </button>
 
+            <button class="nav-button" onclick="loadModule('agent-hub')"><span>⬡</span> Agent Hub</button>
+
             <button class="nav-button" onclick="loadModule('crm')">
-                <span>\u25a3</span>
+                <span>▣</span>
                 CRM
             </button>
 
+            <button class="nav-button" onclick="loadModule('scheduler')"><span>◴</span> Scheduler</button>
+
+            <button class="nav-button" onclick="loadModule('wallet')"><span>$</span> Wallet</button>
+
+            <button class="nav-button" onclick="loadModule('activity')"><span>◐</span> Activity</button>
+
+            <button class="nav-button" onclick="loadModule('chief')">
+                <span>◎</span>
+                Chief of Staff
+            </button>
+
+            <button class="nav-button" onclick="loadModule('social')"><span>◎</span> Social</button>
+
             <button class="nav-button" onclick="loadModule('chat')">
-                <span>\u2726</span>
+                <span>✦</span>
                 Ask JARVIS
             </button>
 
-            <button class="nav-button" onclick="loadModule('settings')">
-                <span>\u2699</span>
-                Settings
-            </button>
+            <button class="nav-button" onclick="loadModule('settings')"><span>⚙</span> Settings</button>
 
         </nav>
 
@@ -271,12 +307,41 @@
 </div>
 
 
-<script src="js/auth.js"></script>
-<script src="js/navigation.js"></script>
-<script src="js/commandCenter.js"></script>
-<script src="js/agentHub.js"></script>
-<script src="js/chief.js"></script>
-<script src="js/layout.js"></script>
+<script src="chat/chat.js"></script>
+<script src="dashboard/dashboard.js?v=57"></script>
+<script src="executive/executive.js"></script>
+<script src="chief/chief.js?v=57"></script>
+<script src="mission/mission.js"></script>
+<script src="agents/agents.js"></script>
+<script src="agents/workspace.js"></script>
+<script src="wallet/wallet.js"></script>
+<script src="memory/memory.js"></script>
+<script src="activity/activity.js"></script>
+<script src="opportunities/opportunities.js"></script>
+<script src="mobile/mobile.js"></script>
+<script src="voice/voice.js"></script>
+<script src="operations/operations.js"></script>
+<script src="readiness/readiness.js"></script>
+<script src="production-agents/productionAgents.js"></script>
+<script src="settings/settings.js"></script>
+<script src="agent-hub/agentHub.js?v=57"></script>
+<script src="social/social.js"></script>
+<script src="releases/releases.js"></script>
+<script src="scheduler/scheduler.js"></script>
+
+<script src="ui/navigation.js?v=57"></script>
+<script src="ui/layout.js?v=57"></script>
+    <script src="./crm/crmFields.js"></script>
+    <script src="./crm/crmApi.js"></script>
+    <script src="./crm/crmState.js"></script>
+    <script src="./crm/crmMetrics.js"></script>
+    <script src="./crm/crmFilters.js"></script>
+    <script src="./crm/crmTable.js"></script>
+    <script src="./crm/crmIntelligence.js"></script>
+    <script src="./crm/crmGovernance.js"></script>
+    <script src="./crm/crmAttention.js"></script>
+    <script src="./crm/crmWorkspace.js"></script>
+    <script src="./crm/crm.js"></script>
 <script>
 window.onerror = function(msg, url, line, col, err) {
     var el = document.getElementById("conversation");

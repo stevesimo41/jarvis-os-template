@@ -1,0 +1,103 @@
+{
+  "version": "1.0",
+  "name": "Well Noticed 5-Touch Category Exclusive",
+  "description": "Standard outreach cadence for Well Noticed category-exclusive prospecting",
+  "category": "well-noticed",
+  "totalDurationDays": 20,
+
+  "timing": {
+    "touch1": { "delayDays": 0, "label": "Website Contact Form" },
+    "touch2": { "delayDays": 3, "label": "Company Info Email" },
+    "touch3": { "delayDays": 5, "label": "Executive Leadership Email" },
+    "touch4": { "delayDays": 5, "label": "LinkedIn Outreach" },
+    "touch5": { "delayDays": 7, "label": "Final Follow-Up Email" }
+  },
+
+  "personalizationTokens": [
+    "greeting",
+    "companyName",
+    "category",
+    "googleReviewCount",
+    "executiveName",
+    "executiveTitle",
+    "executiveLinkedInUrl",
+    "websiteUrl",
+    "contactFormUrl",
+    "city",
+    "specificStrength"
+  ],
+
+  "fallbacks": {
+    "greeting": "the {{companyName}} team",
+    "googleReviewCount": "numerous",
+    "specificStrength": "strong local reputation",
+    "city": "Columbus",
+    "executiveName": "the {{companyName}} team",
+    "executiveTitle": "Owner"
+  },
+
+  "touches": [
+    {
+      "step": 1,
+      "channel": "website-contact-form",
+      "delayDays": 0,
+      "subject": "Quick note about Well Noticed — {{category}} category",
+      "body": "Hi {{greeting}},\n\nI'm reaching out because we're launching a targeted direct-mail publication reaching affluent households across our market.\n\nWe're being very intentional about category exclusivity — only one {{category}} partner will be featured — and {{companyName}} is at the top of our list. Your {{specificStrength}} and reputation tell us you're the kind of brand our audience wants to hear from.\n\nThe format is a booklet, but the strategy is really about digital amplification and brand positioning. Partners receive a unique QR code that makes every impression measurable and traceable.\n\nWould you object to a quick 10-15 minute conversation about how we can put your name in front of the right households?\n\nBest,\n[Your Name]",
+      "notes": "Submit through website contact form. If no contact form available, escalate to Touch 2 as first outreach.",
+      "fallbackAction": "if-no-contact-form-skip-to-touch2"
+    },
+    {
+      "step": 2,
+      "channel": "email",
+      "delayDays": 3,
+      "subject": "{{companyName}} + Well Noticed — closing out {{category}} category",
+      "body": "Hi {{greeting}},\n\nWanted to send a follow-up note as we close out select categories.\n\nWe continue to believe your brand aligns well with what we're building: a network of trusted, top local experts across home, lifestyle, wellness, and service categories. With a strong reputation in {{city}}, {{companyName}} is exactly the kind of partner we want in the {{category}} category.\n\nWe are intentionally limiting partners and are interested in closing out the category with the right local business.\n\nOur belief is that this works best as a digital amplification strategy. Our goal is to drive website traction, strengthen brand positioning, and build a strong community presence.\n\nWould you object to a quick conversation about how this can supplement your already successful top-of-funnel strategy?\n\nBest,\n[Your Name]",
+      "notes": "Send to general info@ or contact email found on website."
+    },
+    {
+      "step": 3,
+      "channel": "email",
+      "delayDays": 5,
+      "subject": "Closing out {{category}} — {{companyName}} specifically came to mind",
+      "body": "Hi {{executiveName}},\n\nWanted to reach out directly as we finalize partners.\n\nQuite honestly, {{companyName}} is one of the businesses we specifically had in mind when shaping the {{category}} category. We are intentionally building a network of best-in-class local experts, and your brand feels aligned with the type of company we want represented.\n\nThis is a targeted publication mailed directly to affluent households in our market. Each partner receives a unique QR code, making every impression measurable and traceable.\n\nWe are keeping categories intentionally limited and would love to see if there may be a fit now or down the road. Would you object to a 5-minute conversation about how we can put your name in front of the right audience?\n\nBest,\n[Your Name]",
+      "notes": "Send to executive leadership (CEO, Founder, GM, Marketing Director). Research LinkedIn for correct contact."
+    },
+    {
+      "step": 4,
+      "channel": "linkedin",
+      "delayDays": 5,
+      "message": "Hi {{executiveName}} — I've been trying to reach the {{companyName}} team about a partnership opportunity. We're closing out the {{category}} category and {{companyName}} is at the top of our list. Would you be open to a quick 10-minute call this week?\n\nBest,\n[Your Name]",
+      "connectionNote": "Hi {{executiveName}} — I'm reaching out about featuring {{companyName}} in our {{category}} category. Would love to connect.",
+      "notes": "Send LinkedIn connection request with personalized note. If already connected, send InMail or direct message."
+    },
+    {
+      "step": 5,
+      "channel": "email",
+      "delayDays": 7,
+      "subject": "One last note — {{category}} category closing soon",
+      "body": "Hi {{executiveName}},\n\nWanted to send one final note as we close out select categories.\n\nWe continue to believe your brand aligns well with what we're building: a network of trusted, top local experts across home, lifestyle, wellness, and service categories. {{companyName}} makes you the clear choice for the {{category}} category.\n\nWe are intentionally limiting partners and are interested in closing out the category with the right local business.\n\nNo pressure whatsoever if timing is not right. We would simply value the opportunity for a quick introductory meeting now or sometime in the future.\n\nBest,\n[Your Name]",
+      "notes": "Final outreach. If no response, mark prospect as 'no-response' and move to nurture list for quarterly follow-up."
+    }
+  ],
+
+  "qualificationCriteria": {
+    "minimumGoogleReviews": 10,
+    "requiredSignals": ["local-business", "service-category"],
+    "categoryExclusivity": true,
+    "preferredGeography": ["Columbus", "Central Ohio"],
+    "disqualifiers": ["national-chain", "franchise-without-local-ownership"]
+  },
+
+  "qrCodeTracking": {
+    "enabled": true,
+    "description": "Each partner receives a unique QR code on their advertisement that routes to a tracked landing page, enabling measurement of impressions and engagement against the mail audience.",
+    "implementation": "partner-qr-codes are generated per campaign and stored in outreach-packages.json"
+  },
+
+  "responseHandling": {
+    "positiveReply": "notify-owner-and-schedule-demo",
+    "negativeReply": "mark-as-declined-and-stop-cadence",
+    "outOfOffice": "pause-cadence-and-resume-after-oOO-period",
+    "noResponse": "complete-cadence-and-add-to-quarterly-nurture"
+  }
+}

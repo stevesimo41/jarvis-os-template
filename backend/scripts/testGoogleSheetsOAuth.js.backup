@@ -1,0 +1,151 @@
+const fs = require("fs");
+const os = require("os");
+const path = require("path");
+
+const { authenticate } =
+    require("@google-cloud/local-auth");
+
+const { google } =
+    require("googleapis");
+
+const SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets"
+];
+
+const CREDENTIALS_PATH = path.join(
+    os.homedir(),
+    ".jarvis",
+    "credentials",
+    "google-oauth-client.json"
+);
+
+const TOKEN_PATH = path.join(
+    os.homedir(),
+    ".jarvis",
+    "credentials",
+    "google-oauth-token.json"
+);
+
+const SPREADSHEET_ID =
+    "1Ao5IX8bPsQjYV1TlnHIybtv7owdmySSv";
+
+async function loadSavedCredentials() {
+    try {
+        const content =
+            fs.readFileSync(TOKEN_PATH, "utf8");
+
+        return google.auth.fromJSON(
+            JSON.parse(content)
+        );
+    } catch {
+        return null;
+    }
+}
+
+async function saveCredentials(client) {
+    const content =
+        fs.readFileSync(CREDENTIALS_PATH, "utf8");
+
+    const keys = JSON.parse(content);
+
+    const key =
+        keys.installed || keys.web;
+
+    if (!key) {
+        throw new Error(
+            "OAuth client JSON is missing installed credentials."
+        );
+    }
+
+    const payload = {
+        type: "authorized_user",
+        client_id: key.client_id,
+        client_secret: key.client_secret,
+        refresh_token:
+            client.credentials.refresh_token
+    };
+
+    fs.writeFileSync(
+        TOKEN_PATH,
+        JSON.stringify(payload, null, 2),
+        {
+            encoding: "utf8",
+            mode: 0o600
+        }
+    );
+}
+
+async function authorize() {
+    let client =
+        await loadSavedCredentials();
+
+    if (client) {
+        return client;
+    }
+
+    client = await authenticate({
+        scopes: SCOPES,
+        keyfilePath: CREDENTIALS_PATH
+    });
+
+    if (client.credentials) {
+        await saveCredentials(client);
+    }
+
+    return client;
+}
+
+async function run() {
+    try {
+        const auth = await authorize();
+
+        const sheets = google.sheets({
+            version: "v4",
+            auth
+        });
+
+        const response =
+            await sheets.spreadsheets.get({
+                spreadsheetId:
+                    SPREADSHEET_ID,
+                fields:
+                    "properties.title,sheets.properties"
+            });
+
+        console.log("");
+        console.log(
+            `CONNECTED: ${response.data.properties.title}`
+        );
+
+        console.log("");
+        console.log("AVAILABLE SHEETS:");
+
+        for (const sheet of response.data.sheets || []) {
+            const properties =
+                sheet.properties || {};
+
+            console.log(
+                [
+                    properties.title,
+                    `gid=${properties.sheetId}`,
+                    `rows=${properties.gridProperties?.rowCount || 0}`,
+                    `columns=${properties.gridProperties?.columnCount || 0}`
+                ].join(" | ")
+            );
+        }
+
+        console.log("");
+        console.log(
+            `OAuth token saved securely at ${TOKEN_PATH}`
+        );
+    } catch (error) {
+        console.error("");
+        console.error(
+            `GOOGLE SHEETS OAUTH TEST FAILED: ${error.message}`
+        );
+
+        process.exit(1);
+    }
+}
+
+run();

@@ -1,25 +1,49 @@
-const fs = require("fs");
-const path = require("path");
+const memory = require("../../memory/memoryEngine");
+const orchestrator = require("../orchestrator");
 
 function runHealthCheck() {
+
     const checks = [];
 
     try {
-        const dataDir = path.resolve(__dirname, "../../data");
-        if (!fs.existsSync(dataDir)) {
-            fs.mkdirSync(dataDir, { recursive: true });
-        }
-        checks.push({ system: "Storage", status: "healthy" });
-    } catch (error) {
-        checks.push({ system: "Storage", status: "error", message: error.message });
+        memory.getExecutiveContext();
+
+        checks.push({
+            system: "Memory",
+            status: "healthy"
+        });
+
+    } catch(error) {
+
+        checks.push({
+            system: "Memory",
+            status: "error",
+            message: error.message
+        });
     }
 
+
     try {
-        const serverJs = fs.readFileSync(path.resolve(__dirname, "../../server.js"), "utf8");
-        checks.push({ system: "Core", status: "healthy" });
-    } catch (error) {
-        checks.push({ system: "Core", status: "error", message: error.message });
+        if (typeof orchestrator.process !== "function") {
+            throw new Error(
+                "Orchestrator process function is unavailable"
+            );
+        }
+
+        checks.push({
+            system: "Orchestrator",
+            status: "healthy"
+        });
+
+    } catch(error) {
+
+        checks.push({
+            system: "Orchestrator",
+            status: "error",
+            message: error.message
+        });
     }
+
 
     return {
         system: "JARVIS OS",
@@ -29,4 +53,7 @@ function runHealthCheck() {
     };
 }
 
-module.exports = { runHealthCheck };
+
+module.exports = {
+    runHealthCheck
+};

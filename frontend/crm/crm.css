@@ -1,0 +1,873 @@
+.jarvis-crm-workspace {
+    width: 100%;
+    color: inherit;
+}
+
+.jarvis-crm-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 22px;
+}
+
+.jarvis-crm-header h1 {
+    margin: 4px 0 8px;
+    color: inherit;
+    font: inherit;
+    font-size: clamp(1.55rem, 2.3vw, 2.15rem);
+    font-weight: 700;
+}
+
+.jarvis-crm-header p {
+    max-width: 680px;
+    margin: 0;
+    color: inherit;
+    opacity: 0.66;
+}
+
+.jarvis-crm-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    opacity: 0.58;
+}
+
+.jarvis-crm-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 150px;
+    padding: 12px 14px;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    opacity: 0.82;
+}
+
+.jarvis-crm-status div {
+    display: grid;
+    gap: 2px;
+}
+
+.jarvis-crm-status strong {
+    font-size: 0.86rem;
+}
+
+.jarvis-crm-status span:not(.jarvis-crm-status-dot) {
+    font-size: 0.72rem;
+    opacity: 0.62;
+}
+
+.jarvis-crm-status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.3;
+}
+
+.jarvis-crm-status-dot.is-connected {
+    opacity: 1;
+    box-shadow: 0 0 0 4px color-mix(
+        in srgb,
+        currentColor 15%,
+        transparent
+    );
+}
+
+.jarvis-crm-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.jarvis-crm-metric {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    background: color-mix(
+        in srgb,
+        currentColor 3%,
+        transparent
+    );
+}
+
+.jarvis-crm-metric span {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 0.73rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.55;
+}
+
+.jarvis-crm-metric strong {
+    display: block;
+    overflow: hidden;
+    font-size: 1.35rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.jarvis-crm-source-name {
+    font-size: 0.88rem !important;
+}
+
+.jarvis-crm-controls {
+    display: grid;
+    grid-template-columns:
+        minmax(220px, 1.8fr)
+        minmax(150px, 1fr)
+        minmax(140px, 0.8fr)
+        auto;
+    align-items: end;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.jarvis-crm-controls label {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+}
+
+.jarvis-crm-controls label > span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.58;
+}
+
+.jarvis-crm-controls input,
+.jarvis-crm-controls select,
+.jarvis-crm-button {
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid currentColor;
+    border-radius: 9px;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+}
+
+.jarvis-crm-controls input,
+.jarvis-crm-controls select {
+    width: 100%;
+}
+
+.jarvis-crm-button {
+    cursor: pointer;
+}
+
+.jarvis-crm-button:hover:not(:disabled) {
+    background: color-mix(
+        in srgb,
+        currentColor 8%,
+        transparent
+    );
+}
+
+.jarvis-crm-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.32;
+}
+
+.jarvis-crm-message {
+    display: grid;
+    gap: 6px;
+    margin: 18px 0;
+    padding: 20px;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    opacity: 0.72;
+}
+
+.jarvis-crm-message.is-error {
+    opacity: 1;
+}
+
+.jarvis-crm-table-shell {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+}
+
+.jarvis-crm-table {
+    width: 100%;
+    min-width: 1180px;
+    border-collapse: collapse;
+}
+
+.jarvis-crm-table th,
+.jarvis-crm-table td {
+    padding: 12px 13px;
+    border-bottom: 1px solid
+        color-mix(
+            in srgb,
+            currentColor 18%,
+            transparent
+        );
+    text-align: left;
+    vertical-align: top;
+}
+
+.jarvis-crm-table th {
+    font-size: 0.7rem;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+    opacity: 0.56;
+}
+
+.jarvis-crm-table td {
+    font-size: 0.82rem;
+}
+
+.jarvis-crm-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.jarvis-crm-table tbody tr:hover {
+    background: color-mix(
+        in srgb,
+        currentColor 4%,
+        transparent
+    );
+}
+
+.jarvis-crm-company {
+    font-weight: 700;
+}
+
+.jarvis-crm-secondary {
+    margin-top: 3px;
+    font-size: 0.74rem;
+    opacity: 0.55;
+}
+
+.jarvis-crm-inline-link {
+    display: block;
+    margin-top: 3px;
+    color: inherit;
+    font-size: 0.73rem;
+    opacity: 0.68;
+    text-decoration: none;
+}
+
+.jarvis-crm-inline-link:hover {
+    text-decoration: underline;
+}
+
+.jarvis-crm-stage {
+    display: inline-flex;
+    padding: 4px 7px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    opacity: 0.76;
+}
+
+.jarvis-crm-action {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.jarvis-crm-empty-row {
+    padding: 30px !important;
+    text-align: center !important;
+    opacity: 0.58;
+}
+
+.jarvis-crm-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 13px;
+}
+
+.jarvis-crm-footer span {
+    font-size: 0.8rem;
+    opacity: 0.62;
+}
+
+@media (max-width: 980px) {
+    .jarvis-crm-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .jarvis-crm-controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .jarvis-crm-header {
+        flex-direction: column;
+    }
+
+    .jarvis-crm-status {
+        width: 100%;
+    }
+
+    .jarvis-crm-metrics,
+    .jarvis-crm-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .jarvis-crm-footer {
+        align-items: stretch;
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.jarvis-crm-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.jarvis-crm-side-column {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.jarvis-crm-selectable-row {
+    cursor: pointer;
+}
+
+.jarvis-crm-selectable-row:focus {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+}
+
+.jarvis-crm-intelligence {
+    position: static;
+    min-height: 360px;
+    padding: 18px;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    background: color-mix(
+        in srgb,
+        currentColor 3%,
+        transparent
+    );
+}
+
+.jarvis-crm-governance {
+    display: grid;
+    gap: 14px;
+    padding: 18px;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    background: color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.jarvis-crm-governance-heading,
+.jarvis-crm-governance-identity {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.jarvis-crm-governance-heading > div,
+.jarvis-crm-governance-identity > div,
+.jarvis-crm-governance-target {
+    display: grid;
+    gap: 4px;
+}
+
+.jarvis-crm-governance-heading span,
+.jarvis-crm-governance-connect label > span,
+.jarvis-crm-governance-target span,
+.jarvis-crm-governance-result > span,
+.jarvis-crm-governance-audit > span,
+.jarvis-crm-governance-identity span {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.58;
+}
+
+.jarvis-crm-governance-shield {
+    padding: 5px 7px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.58rem !important;
+    white-space: nowrap;
+}
+
+.jarvis-crm-governance-connect {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+}
+
+.jarvis-crm-governance-connect label {
+    display: grid;
+    gap: 6px;
+}
+
+.jarvis-crm-governance-connect input {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid currentColor;
+    border-radius: 9px;
+    color: inherit;
+    background: transparent;
+}
+
+.jarvis-crm-governance-connect small {
+    grid-column: 1 / -1;
+    opacity: 0.58;
+}
+
+.jarvis-crm-governance-identity small {
+    opacity: 0.58;
+    text-transform: uppercase;
+}
+
+.jarvis-crm-governance-target,
+.jarvis-crm-governance-result,
+.jarvis-crm-governance-audit {
+    padding-top: 12px;
+    border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.jarvis-crm-governance-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.jarvis-crm-button.is-primary,
+.jarvis-crm-governance-result.is-success {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.jarvis-crm-governance-note,
+.jarvis-crm-governance-placeholder {
+    padding: 10px;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    opacity: 0.68;
+}
+
+.jarvis-crm-governance-note.is-error {
+    opacity: 1;
+}
+
+.jarvis-crm-governance-result {
+    display: grid;
+    gap: 5px;
+}
+
+.jarvis-crm-governance-result p {
+    margin: 0;
+    font-size: 0.76rem;
+    line-height: 1.45;
+    opacity: 0.65;
+}
+
+.jarvis-crm-governance-audit {
+    display: grid;
+    gap: 8px;
+}
+
+.jarvis-crm-governance-audit > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.7rem;
+}
+
+.jarvis-crm-governance-audit strong {
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.jarvis-crm-intelligence-empty,
+.jarvis-crm-intelligence-heading {
+    display: grid;
+    gap: 7px;
+}
+
+.jarvis-crm-intelligence-empty > span,
+.jarvis-crm-intelligence-heading > span,
+.jarvis-crm-intelligence-section > span,
+.jarvis-crm-score span {
+    font-size: 0.69rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.55;
+}
+
+.jarvis-crm-intelligence-empty strong,
+.jarvis-crm-intelligence-heading strong {
+    font-size: 1.05rem;
+}
+
+.jarvis-crm-intelligence-empty p,
+.jarvis-crm-intelligence-section p {
+    margin: 0;
+    line-height: 1.55;
+    opacity: 0.72;
+}
+
+.jarvis-crm-score {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.jarvis-crm-score > div:first-child {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.jarvis-crm-score strong {
+    font-size: 2.1rem;
+    line-height: 1;
+}
+
+.jarvis-crm-score-bar {
+    height: 7px;
+    overflow: hidden;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+}
+
+.jarvis-crm-score-bar span {
+    display: block;
+    height: 100%;
+    background: currentColor;
+}
+
+.jarvis-crm-intelligence-section {
+    display: grid;
+    gap: 8px;
+    padding: 15px 0;
+    border-top: 1px solid
+        color-mix(
+            in srgb,
+            currentColor 18%,
+            transparent
+        );
+}
+
+.jarvis-crm-intelligence-section ul {
+    display: grid;
+    gap: 7px;
+    margin: 0;
+    padding-left: 18px;
+    opacity: 0.72;
+}
+
+.jarvis-crm-signal-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.jarvis-crm-signal-list span {
+    padding: 5px 8px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    opacity: 0.72;
+}
+
+.jarvis-crm-intelligence-footer {
+    padding-top: 14px;
+    border-top: 1px solid
+        color-mix(
+            in srgb,
+            currentColor 18%,
+            transparent
+        );
+    font-size: 0.69rem;
+    opacity: 0.48;
+}
+
+@media (max-width: 1180px) {
+    .jarvis-crm-main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .jarvis-crm-intelligence {
+        position: static;
+    }
+
+    .jarvis-crm-side-column {
+        grid-template-columns: 1fr;
+    }
+}
+.jarvis-crm-lanes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0 0 16px; }
+.jarvis-crm-lane { padding: 13px; border: 1px solid var(--border); border-radius: 9px; color: #aebbc8; background: rgba(13,17,24,.9); text-align: left; cursor: pointer; }
+.jarvis-crm-lane span, .jarvis-crm-lane small { display: block; }.jarvis-crm-lane span { margin-bottom: 5px; font-size: 11px; font-weight: 600; }.jarvis-crm-lane small { color: var(--muted); font-size: 8px; }
+.jarvis-crm-lane.is-active { border-color: rgba(77,163,255,.55); color: var(--blue-bright); background: rgba(77,163,255,.1); }
+@media (max-width: 900px) { .jarvis-crm-lanes { grid-template-columns: repeat(2, 1fr); } }
+
+.jarvis-crm-button.is-campaign { background: rgba(34,197,94,.15); color: #22c55e; border: 1px solid rgba(34,197,94,.3); }
+.jarvis-crm-button.is-campaign:hover { background: rgba(34,197,94,.25); }
+.jarvis-crm-button.is-campaign:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.jarvis-crm-button.is-enrich { background: rgba(168,85,247,.15); color: #a855f7; border: 1px solid rgba(168,85,247,.3); }
+.jarvis-crm-button.is-enrich:hover { background: rgba(168,85,247,.25); }
+
+.jarvis-crm-data-complete { display: flex; align-items: center; gap: 6px; padding: 6px 10px; margin: 8px 0; background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.2); border-radius: 6px; font-size: 0.75rem; color: #22c55e; }
+.jarvis-crm-data-partial { display: flex; align-items: center; gap: 8px; padding: 6px 10px; margin: 8px 0; background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2); border-radius: 6px; font-size: 0.75rem; color: #fbbf24; flex-wrap: wrap; }
+.jarvis-crm-data-bar { width: 60px; height: 4px; background: rgba(255,255,255,.1); border-radius: 2px; overflow: hidden; }
+.jarvis-crm-data-fill { height: 100%; background: #fbbf24; border-radius: 2px; }
+.jarvis-crm-data-pct { font-weight: 600; min-width: 30px; }
+.jarvis-crm-data-missing { color: #aebbc8; font-size: 0.7rem; }
+
+.jarvis-crm-selectable-row { cursor: pointer; transition: background 0.15s; }
+.jarvis-crm-selectable-row:hover { background: rgba(77,163,255,.08); }
+.jarvis-crm-selectable-row.is-selected { background: rgba(77,163,255,.15); border-left: 3px solid rgba(77,163,255,.6); }
+
+.jarvis-crm-governance { margin-top: 16px; }
+.jarvis-crm-governance-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+.jarvis-campaign-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; align-items: stretch; justify-content: stretch; padding: 2vh 2vw; }
+.jarvis-campaign-modal-backdrop { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.75); }
+.jarvis-campaign-modal-content { position: relative; background: #0d1118; border: 1px solid rgba(77,163,255,.2); border-radius: 12px; width: 100%; height: 100%; max-width: none; max-height: none; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,.6); }
+.jarvis-campaign-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; border-bottom: 1px solid rgba(255,255,255,.08); flex-shrink: 0; }
+.jarvis-campaign-modal-header h3 { margin: 0; font-size: 1.15rem; color: #e2e8f0; }
+.jarvis-campaign-modal-close-btn { background: none; border: none; color: #aebbc8; font-size: 1.5rem; cursor: pointer; padding: 0 8px; }
+.jarvis-campaign-modal-close-btn:hover { color: #fff; }
+.jarvis-campaign-modal-body { padding: 24px 28px; overflow-y: auto; flex: 1 1 0; min-height: 0; font-size: 0.95rem; }
+.jarvis-campaign-modal-footer { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 28px; border-top: 1px solid rgba(255,255,255,.08); flex-shrink: 0; }
+
+.jarvis-campaign-existing-badge { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding: 10px 16px; background: rgba(45,212,191,.08); border: 1px solid rgba(45,212,191,.25); border-radius: 8px; font-size: 0.85rem; }
+.jarvis-campaign-existing-badge span { color: #aebbc8; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em; }
+.jarvis-campaign-existing-badge strong { color: #2dd4bf; font-size: 0.8rem; }
+
+.jarvis-campaign-prospect-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; padding: 14px; background: rgba(77,163,255,.06); border: 1px solid rgba(77,163,255,.15); border-radius: 8px; }
+.jarvis-campaign-prospect-detail span { display: block; font-size: 0.7rem; color: #aebbc8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+.jarvis-campaign-prospect-detail strong { font-size: 0.85rem; color: #e2e8f0; }
+
+.jarvis-campaign-steps-preview h4 { margin: 0 0 12px; font-size: 0.85rem; color: #aebbc8; text-transform: uppercase; letter-spacing: 0.05em; }
+.jarvis-campaign-steps-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.jarvis-campaign-steps-header h4 { margin: 0; }
+.jarvis-crm-button.is-edit { background: rgba(59,130,246,.15); color: #3b82f6; border: 1px solid rgba(59,130,246,.3); font-size: 0.78rem; padding: 6px 12px; }
+.jarvis-crm-button.is-edit:hover { background: rgba(59,130,246,.25); }
+.jarvis-crm-button.is-edit.is-editing { background: rgba(34,197,94,.15); color: #22c55e; border-color: rgba(34,197,94,.3); }
+.jarvis-campaign-step-card { border: 1px solid rgba(255,255,255,.08); border-radius: 8px; padding: 22px; margin-bottom: 16px; background: rgba(255,255,255,.02); }
+.jarvis-campaign-step-card.is-completed { border-color: rgba(45,212,191,.25); background: rgba(45,212,191,.04); }
+.jarvis-campaign-step-card.is-ready { border-color: rgba(251,191,36,.3); background: rgba(251,191,36,.04); }
+.jarvis-campaign-step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.jarvis-campaign-step-status { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 1px 6px; border-radius: 3px; }
+.jarvis-campaign-step-status.is-completed { color: #2dd4bf; background: rgba(45,212,191,.12); }
+.jarvis-campaign-step-status.is-ready { color: #fbbf24; background: rgba(251,191,36,.12); }
+.jarvis-campaign-step-icon { font-size: 1.5rem; }
+.jarvis-campaign-step-meta strong { display: block; font-size: 1rem; color: #e2e8f0; }
+.jarvis-campaign-step-meta small { font-size: 0.85rem; color: #aebbc8; }
+.jarvis-campaign-tracking-stats { margin-left: 8px; color: #2dd4bf; font-size: 0.75rem; }
+.jarvis-campaign-tracking-stats.is-pending { color: #6b7280; }
+.jarvis-campaign-step-subject { font-size: 0.95rem; color: #aebbc8; margin-bottom: 10px; }
+.jarvis-campaign-step-subject span { color: #6b7280; }
+.jarvis-campaign-step-message { font-size: 0.95rem; color: #cbd5e1; line-height: 1.85; white-space: pre-wrap; max-height: none; overflow: visible; }
+.jarvis-campaign-step-body { position: relative; }
+.jarvis-campaign-edit-field { width: 100%; min-height: 140px; background: rgba(255,255,255,.05); border: 1px solid rgba(77,163,255,.3); border-radius: 6px; color: #e2e8f0; font-family: inherit; font-size: 0.9rem; line-height: 1.7; padding: 14px; resize: vertical; }
+.jarvis-campaign-edit-field:focus { outline: none; border-color: rgba(77,163,255,.6); }
+.jarvis-campaign-step-subject .jarvis-campaign-edit-field { margin-top: 6px; min-height: 44px; }
+
+.jarvis-campaign-qr-note { display: flex; align-items: center; gap: 8px; margin-top: 16px; padding: 10px 14px; background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.2); border-radius: 8px; font-size: 0.78rem; color: #22c55e; }
+.jarvis-campaign-enrich-note { display: flex; align-items: flex-start; gap: 8px; margin-top: 12px; padding: 10px 14px; background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2); border-radius: 8px; font-size: 0.78rem; color: #fbbf24; }
+
+@media (max-width: 600px) {
+    .jarvis-campaign-prospect-info { grid-template-columns: repeat(2, 1fr); }
+    .jarvis-campaign-modal { padding: 1vh 1vw; }
+    .jarvis-campaign-modal-body { padding: 16px; }
+}
+
+/* ===========================
+   CRM TRACKING BAR
+   =========================== */
+
+.jarvis-crm-tracking-bar {
+    display: flex;
+    gap: 16px;
+    padding: 8px 0;
+    font-size: 0.85rem;
+    color: #aebbc8;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    margin-bottom: 8px;
+}
+
+.jarvis-crm-tracking-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ===========================
+   CRM ATTENTION BANNER
+   =========================== */
+
+.cr-attention-banner {
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+    overflow: hidden;
+}
+
+.cr-attention-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s ease;
+}
+
+.cr-attention-header:hover {
+    background: rgba(255,255,255,.03);
+}
+
+.cr-attention-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.cr-attention-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+}
+
+.cr-attention-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.cr-attention-badge-warn {
+    background: rgba(251,191,36,.1);
+    color: #fbbf24;
+    border: 1px solid rgba(251,191,36,.2);
+}
+
+.cr-attention-badge-info {
+    background: rgba(77,163,255,.1);
+    color: #79bdff;
+    border: 1px solid rgba(77,163,255,.2);
+}
+
+.cr-attention-toggle {
+    margin-left: auto;
+    font-size: 10px;
+    color: #6b7280;
+}
+
+.cr-attention-list {
+    border-top: 1px solid rgba(255,255,255,.06);
+}
+
+.cr-attention-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    transition: background 0.15s ease;
+}
+
+.cr-attention-item:last-child {
+    border-bottom: none;
+}
+
+.cr-attention-item:hover {
+    background: rgba(255,255,255,.02);
+}
+
+.cr-attention-item-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.cr-attention-item-main strong {
+    font-size: 13px;
+    color: #e2e8f0;
+}
+
+.cr-attention-item-note {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+.cr-attention-item-detail {
+    font-size: 11px;
+}
+
+.cr-attention-item-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.cr-attention-btn {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.cr-attention-btn-open {
+    border-color: rgba(77,163,255,.3);
+    background: rgba(77,163,255,.08);
+    color: #79bdff;
+}
+
+.cr-attention-btn-open:hover {
+    background: rgba(77,163,255,.18);
+}
+
+.cr-attention-btn-apply {
+    border-color: rgba(34,197,94,.3);
+    background: rgba(34,197,94,.08);
+    color: #22c55e;
+}
+
+.cr-attention-btn-apply:hover {
+    background: rgba(34,197,94,.18);
+}
+
+.cr-attention-btn-dismiss {
+    border-color: rgba(255,255,255,.1);
+    background: transparent;
+    color: #6b7280;
+}
+
+.cr-attention-btn-dismiss:hover {
+    background: rgba(255,255,255,.05);
+    color: #aebbc8;
+}

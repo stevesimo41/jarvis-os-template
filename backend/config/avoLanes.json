@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "lanes": {
+    "well-noticed": { "label": "Well Noticed", "privacy": "confidential", "stages": ["prospect", "qualified", "proposal", "customer", "renewal", "closed"], "scoreModel": "partner-revenue", "defaultOwner": "owner" },
+    "xodus": { "label": "Xodus", "privacy": "restricted", "stages": ["identified", "engaged", "qualified", "application", "partner", "stewardship", "closed"], "scoreModel": "mission-partnership", "defaultOwner": "owner" },
+    "real-estate": { "label": "Real Estate", "privacy": "confidential", "stages": ["lead", "screening", "diligence", "offer", "contract", "closed", "passed"], "scoreModel": "deal-return-risk", "defaultOwner": "owner" },
+    "jarvis-opportunities": { "label": "AVOs", "privacy": "private", "stages": ["discovered", "researching", "validated", "experiment", "approved", "executing", "revenue", "learned"], "scoreModel": "opportunity-evidence", "defaultOwner": "JARVIS" }
+  }
+}

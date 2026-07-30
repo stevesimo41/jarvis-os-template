@@ -29,6 +29,13 @@ function getTransporter() {
 }
 
 async function sendEmail(to, subject, htmlBody, textBody) {
+    if (!to) {
+        return { success: false, error: "No recipient email address" };
+    }
+    if (validation.isPlaceholderEmail(to)) {
+        return { success: false, error: `BLOCKED: Placeholder/invalid email "${to}" — cannot send outreach` };
+    }
+
     const transport = getTransporter();
     if (!transport) {
         return { success: false, error: "Email not configured — WELL_NOTICED_EMAIL/WELL_NOTICED_PASSWORD missing" };
@@ -36,7 +43,7 @@ async function sendEmail(to, subject, htmlBody, textBody) {
 
     try {
         const info = await transport.sendMail({
-            from: `"Steve Simonetti - Well Noticed" <${process.env.WELL_NOTICED_EMAIL}>`,
+            from: `"${process.env.JARVIS_OWNER_NAME || "Your Name"} - ${process.env.JARVIS_VENTURE_NAME || "Your Company"}" <${process.env.JARVIS_EMAIL || process.env.WELL_NOTICED_EMAIL}>`,
             to,
             subject,
             text: textBody || htmlBody.replace(/<[^>]*>/g, ""),
@@ -60,6 +67,9 @@ async function sendCampaignEmail(campaign, step) {
     const to = campaign.executiveEmail || campaign.prospect?.email;
     if (!to) {
         return { success: false, error: "No recipient email address" };
+    }
+    if (validation.isPlaceholderEmail(to)) {
+        return { success: false, error: `BLOCKED: Placeholder/invalid email "${to}" — cannot send campaign email` };
     }
 
     const companyName = campaign.prospectName || campaign.name || "";

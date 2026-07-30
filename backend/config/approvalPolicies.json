@@ -18,6 +18,12 @@
     "review_venture_candidate": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
     "prepare_venture_assets": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
     "approve_venture_message": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
-    "market_pulse_opportunity": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 }
+    "market_pulse_opportunity": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "lemon_squeezy_refund": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "lemon_squeezy_cancel_subscription": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "venture_outreach": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "review_project_plan": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "review_project_deliverables": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 },
+    "review_project_progress": { "minimumRequesterRole": "operator", "approverRole": "owner", "execution": "internal_task_only", "externalActions": false, "maximumBudget": 0 }
   }
 }

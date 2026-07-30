@@ -1,0 +1,1163 @@
+console.log("Command Center module loaded");
+
+
+async function loadCommandCenter() {
+
+    const workspace =
+        document.getElementById("conversation");
+
+    if (!workspace) {
+
+        console.error(
+            "Command Center workspace not found."
+        );
+
+        return;
+    }
+
+    const container = workspace;
+
+
+    container.innerHTML = `
+
+        <div class="module-shell command-center-shell">
+
+            <div class="module-hero command-hero">
+
+                <div>
+
+                    <div class="eyebrow">
+                        JARVIS OS / EXECUTIVE INTELLIGENCE
+                    </div>
+
+                    <h1>
+                        Command Center
+                    </h1>
+
+                    <p class="module-subtitle">
+                        Executive operating system, mission control,
+                        and strategic intelligence.
+                    </p>
+
+                </div>
+
+
+                <div class="command-live-status">
+
+                    <span class="status-dot"></span>
+
+                    <div>
+
+                        <strong>
+                            SYSTEM ONLINE
+                        </strong>
+
+                        <span>
+                            Intelligence synchronized
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="command-center-loading">
+
+                <div class="loading-pulse"></div>
+
+                <div>
+
+                    <strong>
+                        Synchronizing intelligence
+                    </strong>
+
+                    <span>
+                        Connecting to JARVIS executive systems...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const [
+            healthResponse,
+            briefResponse
+        ] = await Promise.all([
+
+            fetch(
+                "http://localhost:3000/api/command-center"
+            ),
+
+            fetch(
+                "http://localhost:3000/api/jarvis/brief"
+            )
+
+        ]);
+
+
+        if (!healthResponse.ok) {
+
+            throw new Error(
+                `Command Center returned HTTP ${healthResponse.status}`
+            );
+
+        }
+
+
+        if (!briefResponse.ok) {
+
+            throw new Error(
+                `Executive Intelligence returned HTTP ${briefResponse.status}`
+            );
+
+        }
+
+
+        const healthData =
+            await healthResponse.json();
+
+
+        const briefData =
+            await briefResponse.json();
+
+
+        const healthChecks =
+            healthData.health?.checks || [];
+
+
+        const brief =
+            briefData.brief || {};
+
+
+        const executionPlan =
+            brief.executionPlan || [];
+
+
+        const opportunities =
+            brief.opportunityPipeline || [];
+
+
+        const learning =
+            brief.learningInsights || {};
+
+
+        const patterns =
+            learning.patterns || [];
+
+
+        const recommendation =
+            brief.recommendation || {};
+
+
+        const priority =
+            brief.priority || {};
+
+
+        const revenue =
+            brief.revenueOpportunity || {};
+
+
+        const capital =
+            brief.capitalOpportunity || {};
+
+
+        const research =
+            brief.researchPriority || {};
+
+
+        const healthStatusClass =
+            status => {
+
+                if (
+                    status === "healthy" ||
+                    status === "online" ||
+                    status === "active"
+                ) {
+
+                    return "healthy";
+
+                }
+
+                if (
+                    status === "warning" ||
+                    status === "issue"
+                ) {
+
+                    return "warning";
+
+                }
+
+                return "offline";
+
+            };
+
+
+        const healthStatusLabel =
+            status => {
+
+                if (
+                    status === "healthy" ||
+                    status === "online" ||
+                    status === "active"
+                ) {
+
+                    return "ONLINE";
+
+                }
+
+                if (
+                    status === "warning" ||
+                    status === "issue"
+                ) {
+
+                    return "ISSUE";
+
+                }
+
+                return "OFFLINE";
+
+            };
+
+
+        container.innerHTML = `
+
+            <div class="module-shell command-center-shell">
+
+
+                <!-- HERO -->
+
+                <div class="module-hero command-hero">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            JARVIS OS / EXECUTIVE INTELLIGENCE
+                        </div>
+
+                        <h1>
+                            Command Center
+                        </h1>
+
+                        <p class="module-subtitle">
+                            Executive operating system, mission control,
+                            and strategic intelligence.
+                        </p>
+
+                    </div>
+
+
+                    <div class="command-live-status">
+
+                        <span class="status-dot"></span>
+
+                        <div>
+
+                            <strong>
+                                SYSTEM ONLINE
+                            </strong>
+
+                            <span>
+                                Intelligence synchronized
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRIMARY INTELLIGENCE -->
+
+                <div class="command-primary-grid">
+
+
+                    <div class="command-feature-card mission-feature">
+
+                        <div class="feature-card-top">
+
+                            <div class="card-label">
+                                PRIMARY MISSION
+                            </div>
+
+                            <div class="status-pill active">
+                                ACTIVE
+                            </div>
+
+                        </div>
+
+
+                        <h2>
+                            ${priority.name || "No active mission"}
+                        </h2>
+
+
+                        <p class="feature-description">
+                            ${
+                                priority.nextMilestone ||
+                                "No milestone currently available."
+                            }
+                        </p>
+
+
+                        <div class="mission-metrics">
+
+                            <div class="metric-block">
+
+                                <span>
+                                    EXECUTIVE SCORE
+                                </span>
+
+                                <strong>
+                                    ${
+                                        priority.executiveScore ??
+                                        "N/A"
+                                    }
+                                    <small>/10</small>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="metric-block">
+
+                                <span>
+                                    PROGRESS
+                                </span>
+
+                                <strong>
+                                    ${
+                                        priority.progress ??
+                                        0
+                                    }%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="metric-block">
+
+                                <span>
+                                    ALIGNMENT
+                                </span>
+
+                                <strong>
+                                    ${
+                                        priority.missionAlignment ??
+                                        "N/A"
+                                    }/10
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="feature-next-step">
+
+                            <span>
+                                NEXT MILESTONE
+                            </span>
+
+                            <strong>
+                                ${
+                                    priority.nextMilestone ||
+                                    "Awaiting milestone"
+                                }
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="command-side-stack">
+
+
+                        <div class="command-mini-card">
+
+                            <div class="card-label">
+                                REVENUE ENGINE
+                            </div>
+
+                            <h3>
+                                ${
+                                    revenue.name ||
+                                    "No opportunity"
+                                }
+                            </h3>
+
+                            <p>
+                                ${
+                                    revenue.nextAction ||
+                                    "No next action available."
+                                }
+                            </p>
+
+
+                            <div class="score-line">
+
+                                <span>
+                                    Venture Score
+                                </span>
+
+                                <strong>
+                                    ${
+                                        revenue.ventureScore ??
+                                        "N/A"
+                                    }/10
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="command-mini-card">
+
+                            <div class="card-label">
+                                CAPITAL OPPORTUNITY
+                            </div>
+
+                            <h3>
+                                ${
+                                    capital.name ||
+                                    "No capital opportunity"
+                                }
+                            </h3>
+
+                            <p>
+                                ${
+                                    capital.nextAction ||
+                                    "No next action available."
+                                }
+                            </p>
+
+
+                            <div class="score-line">
+
+                                <span>
+                                    Potential
+                                </span>
+
+                                <strong>
+
+                                    ${
+                                        capital.potentialValue
+                                        ?
+                                        "$" +
+                                        Number(
+                                            capital.potentialValue
+                                        ).toLocaleString()
+                                        :
+                                        "N/A"
+                                    }
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RESEARCH -->
+
+                <div class="command-insight-strip">
+
+
+                    <div class="insight-strip-icon">
+                        R
+                    </div>
+
+
+                    <div class="insight-strip-content">
+
+                        <div class="card-label">
+                            RESEARCH PRIORITY
+                        </div>
+
+                        <strong>
+                            ${
+                                research.name ||
+                                "No research priority"
+                            }
+                        </strong>
+
+                        <span>
+                            ${
+                                research.target ||
+                                "No target currently assigned."
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="insight-score">
+
+                        <span>
+                            SCORE
+                        </span>
+
+                        <strong>
+                            ${
+                                research.researchScore ??
+                                "N/A"
+                            }/10
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SYSTEM HEALTH -->
+
+                <div class="command-section">
+
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <div class="eyebrow">
+                                SYSTEM HEALTH
+                            </div>
+
+                            <h2>
+                                JARVIS Infrastructure
+                            </h2>
+
+                        </div>
+
+
+                        <span class="section-meta">
+                            LIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="health-grid">
+
+                        ${
+                            healthChecks.length
+
+                            ?
+
+                            healthChecks.map(check => `
+
+                                <div class="health-card">
+
+                                    <div class="health-card-header">
+
+                                        <span class="
+                                            status-dot
+                                            ${healthStatusClass(
+                                                check.status
+                                            )}
+                                        "></span>
+
+
+                                        <strong>
+                                            ${check.system}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <span class="
+                                        health-status-text
+                                        ${healthStatusClass(
+                                            check.status
+                                        )}
+                                    ">
+
+                                        ${
+                                            healthStatusLabel(
+                                                check.status
+                                            )
+                                        }
+
+                                    </span>
+
+                                </div>
+
+                            `).join("")
+
+                            :
+
+                            `
+
+                                <div class="empty-state">
+
+                                    No health checks available.
+
+                                </div>
+
+                            `
+
+                        }
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TODAY'S EXECUTION -->
+
+                <div class="command-section">
+
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <div class="eyebrow">
+                                TODAY'S EXECUTION
+                            </div>
+
+                            <h2>
+                                Recommended Actions
+                            </h2>
+
+                        </div>
+
+
+                        <span class="section-meta">
+
+                            ${
+                                executionPlan.length
+                            }
+
+                            ACTIONS
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="execution-grid">
+
+                        ${
+                            executionPlan.length
+
+                            ?
+
+                            executionPlan.map(
+                                (item, index) => `
+
+                                <div class="execution-card">
+
+                                    <div class="execution-index">
+
+                                        ${
+                                            String(
+                                                index + 1
+                                            ).padStart(
+                                                2,
+                                                "0"
+                                            )
+                                        }
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <div class="card-label">
+                                            ACTION ${
+                                                index + 1
+                                            }
+                                        </div>
+
+                                        <strong>
+                                            ${item}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            `
+                            ).join("")
+
+                            :
+
+                            `
+
+                                <div class="empty-state">
+
+                                    No execution plan available.
+
+                                </div>
+
+                            `
+
+                        }
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- INTELLIGENCE -->
+
+                <div class="command-two-column">
+
+
+                    <div class="command-section intelligence-panel-card">
+
+
+                        <div class="section-header">
+
+                            <div>
+
+                                <div class="eyebrow">
+                                    ADAPTIVE INTELLIGENCE
+                                </div>
+
+                                <h2>
+                                    JARVIS Recommendation
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="intelligence-message">
+
+                            <div class="intelligence-message-icon">
+                                AI
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Strategic Recommendation
+                                </strong>
+
+                                <p>
+                                    ${
+                                        recommendation.reasoning ||
+                                        recommendation.reason ||
+                                        recommendation.message ||
+                                        "No recommendation available."
+                                    }
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="confidence-row">
+
+                            <span>
+                                CONFIDENCE
+                            </span>
+
+                            <strong>
+                                ${
+                                    recommendation.confidence ??
+                                    "N/A"
+                                }/10
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="command-section intelligence-panel-card">
+
+
+                        <div class="section-header">
+
+                            <div>
+
+                                <div class="eyebrow">
+                                    LEARNING SYSTEM
+                                </div>
+
+                                <h2>
+                                    Pattern Intelligence
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="pattern-summary">
+
+                            <strong>
+
+                                ${
+                                    learning.analyzed ??
+                                    0
+                                }
+
+                                outcomes analyzed
+
+                            </strong>
+
+
+                            <span>
+
+                                ${
+                                    patterns.length
+                                }
+
+                                patterns detected
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="pattern-list">
+
+                            ${
+                                patterns.length
+
+                                ?
+
+                                patterns
+                                .slice(0, 3)
+                                .map(pattern => `
+
+                                    <div class="pattern-item">
+
+                                        <span class="activity-dot"></span>
+
+                                        <div>
+
+                                            <strong>
+                                                ${
+                                                    pattern.pattern ||
+                                                    "Pattern detected"
+                                                }
+                                            </strong>
+
+                                            <span>
+                                                ${
+                                                    pattern.evidence ||
+                                                    ""
+                                                }
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                `)
+                                .join("")
+
+                                :
+
+                                `
+
+                                    <div class="empty-state">
+
+                                        JARVIS is analyzing
+                                        historical patterns.
+
+                                    </div>
+
+                                `
+
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OPPORTUNITY PIPELINE -->
+
+                <div class="command-section">
+
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <div class="eyebrow">
+                                OPPORTUNITY PIPELINE
+                            </div>
+
+                            <h2>
+                                Highest Value Opportunities
+                            </h2>
+
+                        </div>
+
+
+                        <span class="section-meta">
+
+                            ${
+                                opportunities.length
+                            }
+
+                            IDENTIFIED
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="opportunity-grid">
+
+                        ${
+                            opportunities.length
+
+                            ?
+
+                            opportunities
+                            .slice(0, 5)
+                            .map(
+                                (
+                                    opportunity,
+                                    index
+                                ) => `
+
+                                <div class="opportunity-card">
+
+                                    <div class="opportunity-rank">
+
+                                        ${
+                                            String(
+                                                index + 1
+                                            ).padStart(
+                                                2,
+                                                "0"
+                                            )
+                                        }
+
+                                    </div>
+
+
+                                    <div class="opportunity-content">
+
+                                        <div class="card-label">
+
+                                            ${
+                                                opportunity.category ||
+                                                "OPPORTUNITY"
+                                            }
+
+                                        </div>
+
+
+                                        <h3>
+
+                                            ${
+                                                opportunity.name ||
+                                                "Unnamed opportunity"
+                                            }
+
+                                        </h3>
+
+
+                                        <p>
+
+                                            ${
+                                                opportunity.nextAction ||
+                                                opportunity.description ||
+                                                "No next action available."
+                                            }
+
+                                        </p>
+
+
+                                        <div class="opportunity-meta">
+
+                                            <span>
+
+                                                ${
+                                                    opportunity.venture ||
+                                                    "JARVIS OS"
+                                                }
+
+                                            </span>
+
+
+                                            <strong>
+
+                                                ${
+                                                    opportunity.potentialValue
+                                                    ?
+                                                    "$" +
+                                                    Number(
+                                                        opportunity.potentialValue
+                                                    ).toLocaleString()
+                                                    :
+                                                    "Value TBD"
+                                                }
+
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            `
+                            )
+                            .join("")
+
+                            :
+
+                            `
+
+                                <div class="empty-state">
+
+                                    No opportunities currently available.
+
+                                </div>
+
+                            `
+
+                        }
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="command-footer">
+
+
+                    <div>
+
+                        <span class="footer-label">
+                            LAST SYNCHRONIZED
+                        </span>
+
+
+                        <strong>
+
+                            ${
+                                brief.timestamp
+                                ?
+
+                                new Date(
+                                    brief.timestamp
+                                ).toLocaleString()
+
+                                :
+
+                                "Unknown"
+                            }
+
+                        </strong>
+
+                    </div>
+
+
+                    <button
+                        class="refresh-command-center"
+                        onclick="loadCommandCenter()"
+                    >
+
+                        REFRESH INTELLIGENCE
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        `;
+
+    }
+
+
+    catch(error) {
+
+        console.error(
+            "Unable to load Command Center:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="module-shell">
+
+
+                <div class="command-error">
+
+                    <div class="eyebrow">
+                        CONNECTION ERROR
+                    </div>
+
+
+                    <h2>
+                        JARVIS intelligence unavailable
+                    </h2>
+
+
+                    <p>
+                        ${error.message}
+                    </p>
+
+
+                    <button
+                        onclick="loadCommandCenter()"
+                    >
+
+                        RETRY CONNECTION
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+window.loadCommandCenter =
+    loadCommandCenter;
+
+
+window.loadExecutiveBrief =
+    loadCommandCenter;

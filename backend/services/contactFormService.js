@@ -1,4 +1,10 @@
-const { JSDOM } = require("jsdom");
+let _JSDOM = null;
+function getJSDOM() {
+    if (!_JSDOM) {
+        _JSDOM = require("jsdom").JSDOM;
+    }
+    return _JSDOM;
+}
 const webResearch = require("./webResearch");
 const activity = require("../brain/activityService");
 
@@ -65,9 +71,20 @@ function findFieldMatch(inputs, patterns) {
         const name = input.getAttribute("name") || "";
         const id = input.getAttribute("id") || "";
         const placeholder = input.getAttribute("placeholder") || "";
+        const ariaLabel = input.getAttribute("aria-label") || "";
+        const title = input.getAttribute("title") || "";
+        const inputType = input.getAttribute("type") || "";
         const label = input.getAttribute("aria-label") || "";
-        const combined = `${name} ${id} ${placeholder} ${label}`;
+
+        const combined = `${name} ${id} ${placeholder} ${ariaLabel} ${title} ${inputType}`;
         if (patterns.some(p => p.test(combined))) {
+            return name || id;
+        }
+
+        const labelEl = id ? input.ownerDocument?.querySelector(`label[for="${id}"]`) : null;
+        const parentLabel = input.closest("label");
+        const labelText = (labelEl?.textContent || parentLabel?.textContent || "").toLowerCase();
+        if (labelText && patterns.some(p => p.test(labelText))) {
             return name || id;
         }
     }
@@ -75,7 +92,7 @@ function findFieldMatch(inputs, patterns) {
 }
 
 function detectFormFields(html, formElement) {
-    const dom = new JSDOM(html);
+    const dom = new (getJSDOM())(html);
     const inputs = formElement
         ? Array.from(formElement.querySelectorAll("input, textarea, select"))
         : Array.from(dom.window.document.querySelectorAll("form input, form textarea, form select"));
@@ -130,7 +147,7 @@ async function detectForm(url) {
         return { detected: false, reason: "captcha-detected", needsManual: true };
     }
 
-    const dom = new JSDOM(html);
+    const dom = new (getJSDOM())(html);
     const forms = Array.from(dom.window.document.querySelectorAll("form"));
 
     for (const form of forms) {
@@ -139,8 +156,15 @@ async function detectForm(url) {
         const formClass = form.getAttribute("class") || "";
         const formId = form.getAttribute("id") || "";
 
-        const isContact = /contact|inquiry|get-in-touch|reach|message/i.test(action + " " + formClass + " " + formId)
+        let isContact = /contact|inquiry|get-in-touch|reach|message/i.test(action + " " + formClass + " " + formId)
             || /contact|inquiry/i.test(form.innerHTML.substring(0, 500));
+
+        if (!isContact) {
+            const fields = detectFormFields(html, form);
+            if (fields.name && fields.email && fields.message) {
+                isContact = true;
+            }
+        }
 
         if (!isContact && forms.length > 1) continue;
 
@@ -226,7 +250,16 @@ async function doSubmit(formInfo, data) {
         payload.context = { pageUri: data.websiteUrl || "" };
     }
 
-    const submitUrl = action.startsWith("http") ? action : new URL(action, data.websiteUrl).href;
+    if (!action || action.startsWith("javascript:") || action === "#" || action === "#0") {
+        return { success: false, reason: "invalid-form-action", formType, suggestion: "Form action is not a real URL." };
+    }
+
+    let submitUrl;
+    try {
+        submitUrl = action.startsWith("http") ? action : new URL(action, data.websiteUrl).href;
+    } catch {
+        return { success: false, reason: "invalid-url", formType, suggestion: "Could not resolve form action URL." };
+    }
 
     try {
         const body = new URLSearchParams(payload).toString();
